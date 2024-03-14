@@ -1,0 +1,215 @@
+[[bunyian]]
+rantau = "dwibibir"
+kaedah = "sengauan"
+jawi = "م"
+jenis_jawi = "kongsi"
+rumi = "m"
+IPA = "m"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "sengauan"
+jawi = "ن"
+jenis_jawi = "kongsi"
+rumi = "n"
+IPA = "n"
+
+[[bunyian]]
+rantau = "lelangit"
+kaedah = "sengauan"
+jawi = "ڽ"
+jenis_jawi = "ciptaan"
+rumi = "ny"
+IPA = "ɲ"
+
+[[bunyian]]
+rantau = "lelangit lembut"
+kaedah = "sengauan"
+jawi = "ڠ"
+jenis_jawi = "ciptaan"
+rumi = "ng"
+IPA = "ŋ"
+
+[[bunyian]]
+rantau = "dwibibir"
+kaedah = "letusan bersuara"
+jawi = "ڤ"
+jenis_jawi = "ciptaan"
+rumi = "p"
+IPA = "p"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "letusan bersuara"
+jawi = "ت"
+jenis_jawi = "kongsi"
+rumi = "t"
+IPA = "t"
+
+[[bunyian]]
+rantau = "lelangit"
+kaedah = "letusan bersuara"
+jawi = "چ"
+jenis_jawi = "ciptaan"
+rumi = "c"
+IPA = "t͡ʃ"
+
+[[bunyian]]
+rantau = "lelangit lembut"
+kaedah = "letusan bersuara"
+jawi = "ك"
+jenis_jawi = "kongsi"
+rumi = "k"
+IPA = "k"
+
+[[bunyian]]
+rantau = "anak tekak"
+kaedah = "letusan bersuara"
+jawi = "ق"
+jenis_jawi = "arab"
+rumi = "q"
+IPA = "q"
+
+[[bunyian]]
+rantau = "tekak"
+kaedah = "letusan bersuara"
+jawi = "ع/-ق"
+jenis_jawi = "kongsi"
+rumi = "-k/'"
+IPA = "ʔ"
+
+[[bunyian]]
+rantau = "dwibibir"
+kaedah = "letusan tak bersuara"
+jawi = "ب"
+jenis_jawi = "kongsi"
+rumi = "b"
+IPA = "b"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "letusan tak bersuara"
+jawi = "د"
+jenis_jawi = "kongsi"
+rumi = "d"
+IPA = "d"
+
+[[bunyian]]
+rantau = "lelangit"
+kaedah = "letusan tak bersuara"
+jawi = "ج"
+jenis_jawi = "kongsi"
+rumi = "j"
+IPA = "d͡ʒ"
+
+[[bunyian]]
+rantau = "lelangit lembut"
+kaedah = "letusan tak bersuara"
+jawi = "ڬ"
+jenis_jawi = "ciptaan"
+rumi = "g"
+IPA = "g"
+
+[[bunyian]]
+rantau = "dwibibir"
+kaedah = "geseran bersuara"
+jawi = "f"
+jenis_jawi = "arab"
+rumi = "f"
+IPA = "f"
+
+[[bunyian]]
+rantau = "bibir-gusi"
+kaedah = "geseran bersuara"
+jawi = "ث"
+jenis_jawi = "arab"
+rumi = "s/th"
+IPA = "θ"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "geseran bersuara"
+jawi = "س"
+jenis_jawi = "kongsi"
+rumi = "s"
+IPA = "s"
+
+[[bunyian]]
+rantau = "lelangit"
+kaedah = "geseran bersuara"
+jawi = "ش"
+jenis_jawi = "arab"
+rumi = "sy"
+IPA = "ʃ"
+
+[[bunyian]]
+rantau = "lelangit lembut"
+kaedah = "geseran bersuara"
+jawi = "خ"
+jenis_jawi = "arab"
+rumi = "kh"
+IPA = "x"
+
+[[bunyian]]
+rantau = "tekak"
+kaedah = "geseran bersuara"
+jawi = "ه"
+jenis_jawi = "kongsi"
+rumi = "h"
+IPA = "h"
+
+[[bunyian]]
+rantau = "bibir-gusi"
+kaedah = "geseran tak bersuara"
+jawi = "ذ"
+jenis_jawi = "arab"
+rumi = "z"
+IPA = "ð"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "geseran tak bersuara"
+jawi = "ز"
+jenis_jawi = "kongsi"
+rumi = "z"
+IPA = "z"
+
+[[bunyian]]
+rantau = "lelangit lembut"
+kaedah = "geseran tak bersuara"
+jawi = "غ"
+jenis_jawi = "arab"
+rumi = "gh"
+IPA = "ɣ"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "malaran tak geser"
+jawi = "ل"
+jenis_jawi = "kongsi"
+rumi = "l"
+IPA = "l"
+
+[[bunyian]]
+rantau = "lelangit"
+kaedah = "malaran tak geser"
+jawi = "ي"
+jenis_jawi = "kongsi"
+rumi = "y"
+IPA = "j"
+
+[[bunyian]]
+rantau = "lelangit lembut"
+kaedah = "malaran tak geser"
+jawi = "و"
+jenis_jawi = "kongsi"
+rumi = "w"
+IPA = "w"
+
+[[bunyian]]
+rantau = "lelangit-gusi"
+kaedah = "getaran"
+jawi = "ر"
+jenis_jawi = "kongsi"
+rumi = "r"
+IPA = "r"
