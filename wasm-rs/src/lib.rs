@@ -14,6 +14,7 @@ extern "C" {
 pub struct Bunyian {
     pub rantau: RantauBunyian,
     pub kaedah: KaedahBunyian,
+    pub makhraj: Option<MakhrajTajwid>,
     jawi: String,
     pub jenis_jawi: JenisJawi,
     rumi: String,
@@ -28,6 +29,7 @@ impl Bunyian {
         Self {
             rantau: RantauBunyian::Dwibibir,
             kaedah: KaedahBunyian::Sengauan,
+            makhraj: None,
             jawi: "".into(),
             jenis_jawi: JenisJawi::Kongsi,
             rumi: "".into(),
@@ -112,4 +114,26 @@ pub enum JenisJawi {
     Kongsi,
     Ciptaan,
     Arab,
+}
+
+#[wasm_bindgen]
+#[derive(Deserialize, Clone, Copy)]
+#[serde(rename_all = "lowercase")]
+pub enum MakhrajTajwid {
+    #[serde(rename = "dua bibir")]
+    DuaBibir,
+    #[serde(rename = "hujung lidah")]
+    HujungLidah,
+    #[serde(rename = "tepi lidah")]
+    TepiLidah,
+    #[serde(rename = "tengah lidah")]
+    TengahLidah,
+    #[serde(rename = "pangkal lidah")]
+    PangkalLidah,
+    #[serde(rename = "hujung halkum")]
+    HujungHalkum,
+    #[serde(rename = "tengah halkum")]
+    TengahHalkum,
+    #[serde(rename = "pangkal halkum")]
+    PangkalHalkum,
 }
