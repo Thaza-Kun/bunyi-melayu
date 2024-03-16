@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use toml;
 use wasm_bindgen::prelude::*;
 
@@ -6,12 +6,6 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 extern "C" {
     fn alert(s: &str);
-}
-
-// export Rust function greet to be used in JS/TS, the same function signature will be used in JS/TS
-#[wasm_bindgen]
-pub fn greet(str: &str) {
-    alert(&format!("Bye, {}!", str));
 }
 
 #[allow(dead_code)]
@@ -42,16 +36,16 @@ impl Bunyian {
     }
 
     #[wasm_bindgen(getter)]
-    pub fn jawi(self) -> String {
-        self.jawi
+    pub fn jawi(&self) -> String {
+        String::from(&self.jawi)
     }
     #[wasm_bindgen(getter)]
-    pub fn rumi(self) -> String {
-        self.rumi
+    pub fn rumi(&self) -> String {
+        String::from(&self.rumi)
     }
     #[wasm_bindgen(getter)]
-    pub fn ipa(self) -> String {
-        self.ipa
+    pub fn ipa(&self) -> String {
+        String::from(&self.ipa)
     }
 }
 
@@ -80,7 +74,7 @@ impl BunyianTable {
 
 
 #[wasm_bindgen]
-#[derive(Deserialize, Clone, Copy)]
+#[derive(Serialize, Deserialize, Clone, Copy)]
 #[serde(rename_all="kebab-case")]
 pub enum RantauBunyian {
     Dwibibir,

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import init, { greet } from "wasm-rs";
+    import init from "wasm-rs";
     // we need onMount to run init
     import { onMount } from "svelte";
     import { Bunyian, RantauBunyian, KaedahBunyian, JenisJawi, from_toml_str } from "wasm-rs";
@@ -23,12 +23,10 @@
   jawi = {item.jawi}
 
   <!-- FOR SOME REASON, ADDING MORE ITEMS CREATE A NULL POINTER -->
-  <!-- jenis_jawi = {JenisJawi[item.jenis_jawi]} -->
-  <!-- rumi = {item.rumi} -->
-  <!-- IPA = {item.ipa} -->
+  <!-- --THE PROBLEM WAS THAT `bunyian.jawi`, `bunyian.rumi` AND `bunyian.ipa` MOVES THE REFERENCES TO SELF -->
+  <!-- --THEREFORE, MAKING THE GETTER FUNCTION SHOULD USE `&self` INSTEAD OF `self` -->
+  jenis_jawi = {JenisJawi[item.jenis_jawi]}
+  rumi = {item.rumi}
+  IPA = {item.ipa}
   <br/>
 {/each}
-
-<div>
-    <button on:click={() => {greet("Eloi")}}>Click Me</button>
-</div>
