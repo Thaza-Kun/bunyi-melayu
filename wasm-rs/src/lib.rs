@@ -17,7 +17,7 @@ pub struct Bunyian {
     jawi: String,
     pub jenis_jawi: JenisJawi,
     rumi: String,
-    #[serde(alias="IPA")]
+    #[serde(alias = "IPA")]
     ipa: String,
 }
 
@@ -52,7 +52,7 @@ impl Bunyian {
 #[wasm_bindgen]
 pub fn from_toml_str(data: String) -> Vec<Bunyian> {
     match BunyianTable::from_toml_str(data) {
-        Ok(v) => v ,
+        Ok(v) => v,
         Err(e) => {
             alert(&format!("Error reading string. {}", e));
             vec![]
@@ -62,7 +62,7 @@ pub fn from_toml_str(data: String) -> Vec<Bunyian> {
 
 #[derive(Deserialize)]
 pub struct BunyianTable {
-    pub bunyian: Vec<Bunyian>
+    pub bunyian: Vec<Bunyian>,
 }
 
 impl BunyianTable {
@@ -72,10 +72,9 @@ impl BunyianTable {
     }
 }
 
-
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Clone, Copy)]
-#[serde(rename_all="kebab-case")]
+#[serde(rename_all = "kebab-case")]
 pub enum RantauBunyian {
     Dwibibir,
     BibirGusi,
@@ -90,7 +89,7 @@ pub enum RantauBunyian {
 
 #[wasm_bindgen]
 #[derive(Deserialize, Clone, Copy)]
-#[serde(rename_all="lowercase")]
+#[serde(rename_all = "lowercase")]
 pub enum KaedahBunyian {
     Sengauan,
     #[serde(rename = "letusan bersuara")]
@@ -108,7 +107,7 @@ pub enum KaedahBunyian {
 
 #[wasm_bindgen]
 #[derive(Deserialize, Clone, Copy)]
-#[serde(rename_all="lowercase")]
+#[serde(rename_all = "lowercase")]
 pub enum JenisJawi {
     Kongsi,
     Ciptaan,
