@@ -1,3 +1,5 @@
+mod parser;
+
 use serde::{Deserialize, Serialize};
 use toml;
 use wasm_bindgen::prelude::*;
