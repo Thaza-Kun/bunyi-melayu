@@ -1,6 +1,5 @@
-import toml_to_bunyians from 'wasm-rs';
-
 export async function load(event) {
-	const data = await event.fetch('/Bunyian.toml');
-	return { string: await data.text() };
+	const bunyian = await event.fetch('/Bunyian.toml');
+	const tatabunyi = await event.fetch('/Tatabunyi.toml');
+	return { bunyian: await bunyian.text(), tatabunyi: await tatabunyi.text() };
 }

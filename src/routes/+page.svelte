@@ -4,23 +4,28 @@
 	import { onMount } from 'svelte';
 	import {
 		Bunyian,
+		Phonotactic,
 		RantauBunyian,
 		KaedahBunyian,
 		JenisJawi,
 		MakhrajTajwid,
-		from_toml_str
+		parse_bunyian_toml,
+		parse_tatabunyi_toml
 	} from 'wasm-rs';
 
 	export let data;
 	let items: Bunyian[] = [];
+	let tatabunyi: Phonotactic[] = [];
 	type PTable = Map<string, Map<string, Bunyian | undefined>>;
 	type MTable = Map<string, Bunyian[]>;
 	let phoneticTable: PTable;
 	let makhrajTable: MTable;
 	type Enums = typeof RantauBunyian | typeof KaedahBunyian | typeof JenisJawi;
+
 	onMount(async () => {
 		await init(); // init initializes memory addresses needed by WASM and that will be used by JS/TS
-		items = from_toml_str(data.string);
+		items = parse_bunyian_toml(data.bunyian);
+		tatabunyi = parse_tatabunyi_toml(data.tatabunyi);
 		phoneticTable = new Map(
 			Array.from(enumKeys(RantauBunyian)).map((r) => [
 				r,
@@ -66,6 +71,13 @@
 		return Object.values(items).filter((v) => isNaN(Number(v)));
 	}
 </script>
+
+<h2>Tatabunyi (Phonotactic)</h2>
+<li>
+	{#each tatabunyi as t}
+		menyanyi ➡ {t.parse_string('menyanyi')}
+	{/each}
+</li>
 
 <h2>Fonologi Moden</h2>
 <table class="table">

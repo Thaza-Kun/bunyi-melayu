@@ -1,0 +1,5 @@
+[[phonotactic]]
+name = "Melayu Lama"
+definition.onset = [["ny", "ng", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y","w", "r"]]
+definition.nucleus = [["a", "e", "i", "o", "u"]]
+definition.coda = [["ng", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]

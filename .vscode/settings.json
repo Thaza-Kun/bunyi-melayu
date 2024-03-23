@@ -1,5 +1,7 @@
 {
-    "rust-analyzer.linkedProjects": [
-        ".\\wasm-rs\\Cargo.toml"
-    ]
+	"rust-analyzer.linkedProjects": [
+		".\\wasm-rs\\Cargo.toml",
+		".\\wasm-rs\\Cargo.toml",
+		".\\wasm-rs\\Cargo.toml"
+	]
 }
