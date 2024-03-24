@@ -24,7 +24,7 @@ pub(crate) struct SyllableTags<T> {
 
 impl<T: Ord + InputLength> AltTagVec<T> {
     pub fn new_ordered(mut items: Vec<T>) -> Self {
-        items.sort_by(|a, b| a.input_len().cmp(&b.input_len()));
+        items.sort_by(|a, b| b.input_len().cmp(&a.input_len()));
         Self { items, index: 0 }
     }
 }

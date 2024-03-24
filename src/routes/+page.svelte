@@ -22,8 +22,8 @@
 	{input}
 	<dl>
 		{#each parse_tatabunyi_toml(data.tatabunyi) as t}
-			<!--BUG: Error only show the parsed string. Should tell user that it is error -->
 			<dt>{t.name}</dt>
+			<dd>{t.tags.onset}</dd>
 			<dd>
 				▶ {t.parse_string(input, ' / ')}
 			</dd>

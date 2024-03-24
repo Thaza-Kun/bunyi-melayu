@@ -82,7 +82,17 @@ impl From<SyllableTags<String>> for SyllableTagsJson {
 impl Phonotactic {
     pub fn parse_string(&mut self, input: String, separator: Option<String>) -> String {
         match self.parse_syllables(&input) {
-            Ok((_rest, phrase)) => phrase.as_separated(separator),
+            Ok((_rest, phrase)) => {
+                if _rest.is_empty() {
+                    phrase.as_separated(separator)
+                } else {
+                    format!(
+                        "{} ...{} (Unable to parse)",
+                        phrase.as_separated(separator),
+                        _rest
+                    )
+                }
+            }
             Err(e) => format!("Failed to parse: {}", e),
         }
         // .map(|(rest, parsed)| (String::from(rest), parsed.as_separated(None)))
@@ -184,7 +194,7 @@ mod test {
     use super::{tags::SyllableTags, Phrase, SyllableUnit};
 
     #[test]
-    fn test_malay_phonotactic() {
+    fn test_penerangan_melayu_lama() {
         let word = "penerangan".to_string();
         let definition = SyllableTags::new_ordered(
             vec![
@@ -210,7 +220,7 @@ mod test {
         );
     }
     #[test]
-    fn test_menyanyi() {
+    fn test_menyanyi_melayu_lama() {
         let word = "menyanyi".to_string();
         let definition = SyllableTags::new_ordered(
             vec![
@@ -235,17 +245,16 @@ mod test {
         );
     }
     #[test]
-    fn test_malay_arab_phonotactic() {
+    fn test_mesyuarat_melayu_klasik() {
         let word = "mesyuarat".to_string();
         let definition = SyllableTags::new_ordered(
             vec![
-                "kh", "sy", "th", "gh", "q", "f", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g",
-                "s", "h", "l", "y", "w", "r",
+                "kh", "sy", "gh", "ny", "ng", "q", "f", "m", "n", "p", "t", "c", "k", "b", "d",
+                "j", "g", "s", "h", "l", "y", "w", "r",
             ],
             vec!["a", "e", "i", "o", "u"],
             vec![
-                "kh", "sy", "th", "gh", "q", "f", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g",
-                "s", "h", "l", "y", "w", "r",
+                "kh", "sy", "gh", "ng", "q", "f", "b", "m", "n", "p", "t", "k", "s", "h", "l", "r",
             ],
         )
         .as_string();
@@ -259,6 +268,59 @@ mod test {
                 SyllableUnit::from((Some("sy"), "u", None)),
                 SyllableUnit::from((None, "a", None)),
                 SyllableUnit::from((Some("r"), "a", Some("t")))
+            ]
+        );
+    }
+
+    #[test]
+    fn test_musytari_melayu_klasik() {
+        let word = "musytari".to_string();
+        let definition = SyllableTags::new_ordered(
+            vec![
+                "kh", "sy", "gh", "ny", "ng", "q", "f", "m", "n", "p", "t", "c", "k", "b", "d",
+                "j", "g", "s", "h", "l", "y", "w", "r",
+            ],
+            vec!["a", "e", "i", "o", "u"],
+            vec![
+                "kh", "sy", "gh", "ng", "q", "f", "b", "m", "n", "p", "t", "k", "s", "h", "l", "r",
+            ],
+        )
+        .as_string();
+        let mut arab_phonotactic = Phonotactic::new("Melayu Klasik".into(), definition.clone());
+        let (_rem, word) = arab_phonotactic.parse_syllables(&word).expect("Error");
+        let w = word.with_postprocessing(&definition);
+        assert_eq!(
+            w.syllables,
+            vec![
+                SyllableUnit::from((Some("m"), "u", Some("sy"))),
+                SyllableUnit::from((Some("t"), "a", None)),
+                SyllableUnit::from((Some("r"), "i", None))
+            ]
+        );
+    }
+
+    #[test]
+    fn test_ghaib_melayu_klasik() {
+        let word = "ghaib".to_string();
+        let definition = SyllableTags::new_ordered(
+            vec![
+                "kh", "sy", "gh", "ny", "ng", "q", "f", "m", "n", "p", "t", "c", "k", "b", "d",
+                "j", "g", "s", "h", "l", "y", "w", "r",
+            ],
+            vec!["a", "e", "i", "o", "u"],
+            vec![
+                "kh", "sy", "gh", "ng", "q", "f", "b", "m", "n", "p", "t", "k", "s", "h", "l", "r",
+            ],
+        )
+        .as_string();
+        let mut arab_phonotactic = Phonotactic::new("Melayu Klasik".into(), definition.clone());
+        let (_rem, word) = arab_phonotactic.parse_syllables(&word).expect("Error");
+        let w = word.with_postprocessing(&definition);
+        assert_eq!(
+            w.syllables,
+            vec![
+                SyllableUnit::from((Some("gh"), "a", None)),
+                SyllableUnit::from((None, "i", Some("b"))),
             ]
         );
     }
