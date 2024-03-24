@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 use self::tags::SyllableTags;
 
 #[wasm_bindgen]
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct Phonotactic {
     name: String,
     definition: SyllableTags<String>,
@@ -37,7 +37,11 @@ pub struct PhonotacticToml {
 impl PhonotacticToml {
     pub fn from_toml_str(data: String) -> Result<Vec<Phonotactic>, toml::de::Error> {
         let d: Self = toml::from_str(&data)?;
-        Ok(d.phonotactic)
+        Ok(d.get_phonotatics())
+    }
+
+    pub fn get_phonotatics(&self) -> Vec<Phonotactic> {
+        self.phonotactic.clone()
     }
 }
 
@@ -76,9 +80,9 @@ impl From<SyllableTags<String>> for SyllableTagsJson {
 
 #[wasm_bindgen]
 impl Phonotactic {
-    pub fn parse_string(&mut self, input: String) -> String {
+    pub fn parse_string(&mut self, input: String, separator: Option<String>) -> String {
         match self.parse_syllables(&input) {
-            Ok((_rest, phrase)) => phrase.as_separated(None),
+            Ok((_rest, phrase)) => phrase.as_separated(separator),
             Err(e) => format!("Failed to parse: {}", e),
         }
         // .map(|(rest, parsed)| (String::from(rest), parsed.as_separated(None)))
@@ -113,8 +117,10 @@ impl<'a> Phrase<&'a str> {
                             .iter()
                             .filter(|a| a == &&format!("{}{}", &s, &t)),
                     );
-                    self.syllables[index].coda = None;
-                    self.syllables[index + 1].onset = t.first().map(|a| a.as_str());
+                    if t.len() != 0 {
+                        self.syllables[index].coda = None;
+                        self.syllables[index + 1].onset = t.first().map(|a| a.as_str());
+                    }
                 }
                 (_, _) => {}
             }
