@@ -6,6 +6,6 @@ definition.coda = [["ng", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]
 
 [[phonotactic]]
 name = "Melayu Klasik"
-definition.onset = [["kh", "sy", "th", "gh", "ny", "ng","q", "f", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y","w", "r"]]
+definition.onset = [["kh", "sy", "gh","ny", "ng","q", "f", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y","w", "r"]]
 definition.nucleus = [["a", "e", "i", "o", "u"]]
-definition.coda = [["kh", "sy", "th", "gh", "ng", "q", "f", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]
+definition.coda = [["kh", "sy", "gh", "ng", "q", "f","b", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]
