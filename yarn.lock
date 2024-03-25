@@ -208,10 +208,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@melt-ui/svelte@0.76.0":
-  version "0.76.0"
-  resolved "https://registry.yarnpkg.com/@melt-ui/svelte/-/svelte-0.76.0.tgz#07ecd835ceebe917f55f79aff26fca667b8df216"
-  integrity sha512-X1ktxKujjLjOBt8LBvfckHGDMrkHWceRt1jdsUTf0EH76ikNPP1ofSoiV0IhlduDoCBV+2YchJ8kXCDfDXfC9Q==
+"@melt-ui/svelte@0.76.2":
+  version "0.76.2"
+  resolved "https://registry.yarnpkg.com/@melt-ui/svelte/-/svelte-0.76.2.tgz#9d6a578695ac257e34710fdeff3c8a40c8c25f31"
+  integrity sha512-7SbOa11tXUS95T3fReL+dwDs5FyJtCEqrqG3inRziDws346SYLsxOQ6HmX+4BkIsQh1R8U3XNa+EMmdMt38lMA==
   dependencies:
     "@floating-ui/core" "^1.3.1"
     "@floating-ui/dom" "^1.4.5"
@@ -464,13 +464,13 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-bits-ui@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/bits-ui/-/bits-ui-0.20.0.tgz#2d29abbb314f17306d129ed98a25e6d7608787df"
-  integrity sha512-cAQHnVV4anto6zrtTHGDa/Rxjhp2sFdCL1zLoqOvQIW8cJ5iz9V0+pKvi439pi5zllALM7WosXEz2E8twA50qA==
+bits-ui@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/bits-ui/-/bits-ui-0.20.1.tgz#0a97470ee52f4e4a5a02e3508de3ac80dedf8632"
+  integrity sha512-P0JRuWn+XpFYsAbGnPlyPVKab88v2S8Q57cUI3LZdh0nulO7fgxbXgBHgEAmmgNk63XxyvhmfYz44kZFRrHtLA==
   dependencies:
     "@internationalized/date" "^3.5.1"
-    "@melt-ui/svelte" "0.76.0"
+    "@melt-ui/svelte" "0.76.2"
     nanoid "^5.0.5"
 
 brace-expansion@^1.1.7:

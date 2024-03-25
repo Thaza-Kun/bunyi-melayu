@@ -18,6 +18,7 @@
 	}
 </script>
 
+<h1 class="h1 text-center">Tatabunyi</h1>
 <div class="m-4 flex flex-col items-center space-y-4">
 	<form
 		class="flex w-full max-w-sm items-center space-x-4"

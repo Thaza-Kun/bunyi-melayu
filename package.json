@@ -32,7 +32,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"bits-ui": "^0.20.0",
+		"bits-ui": "^0.20.1",
 		"clsx": "^2.1.0",
 		"fs": "^0.0.1-security",
 		"tailwind-merge": "^2.2.2",
