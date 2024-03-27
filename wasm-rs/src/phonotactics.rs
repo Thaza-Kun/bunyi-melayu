@@ -81,63 +81,100 @@ impl From<SyllableTags<String>> for SyllableTagsJson {
     }
 }
 
-struct ParseResult<'a> {
+struct InnerParseResult<'a> {
     full: bool,
     rest: String,
     phrase: Phrase<&'a str>,
 }
 
 #[wasm_bindgen]
+pub struct ParseResults {
+    options: ParseResultOptions,
+    full: Option<String>,
+    partial: Option<(String, String, String)>,
+    // details: String,
+}
+
+#[wasm_bindgen]
+impl ParseResults {
+    #[wasm_bindgen(getter)]
+    pub fn full(&self) -> Option<String> {
+        self.full.clone()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn error(&self) -> bool {
+        self.partial.is_some()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn head(&self) -> Option<String> {
+        Some(self.partial.clone()?.0)
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn mid(&self) -> Option<String> {
+        Some(self.partial.clone()?.1)
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn tail(&self) -> Option<String> {
+        Some(self.partial.clone()?.2)
+    }
+}
+
+impl ParseResults {
+    pub fn new(options: ParseResultOptions) -> Self {
+        Self {
+            options,
+            full: None,
+            partial: None,
+            // details: "".into(),
+        }
+    }
+
+    pub fn with_full(&mut self, input: String) {
+        self.full = Some(input);
+    }
+
+    pub fn with_partial(&mut self, head: String, mid: String, tail: String) {
+        self.partial = Some((head, mid, tail));
+    }
+}
+
+#[wasm_bindgen]
 pub struct ParseResultOptions {
     separator: Option<String>,
-    err_tag: String,
-    err_msg: String,
-    msg_class: String,
 }
 
 #[wasm_bindgen]
 impl ParseResultOptions {
     #[wasm_bindgen(constructor)]
-    pub fn new(
-        separator: Option<String>,
-        err_tag: String,
-        err_msg: String,
-        msg_class: String,
-    ) -> Self {
-        Self {
-            separator,
-            err_tag,
-            err_msg,
-            msg_class,
-        }
+    pub fn new(separator: Option<String>) -> Self {
+        Self { separator }
     }
 }
 
-impl<'a> ParseResult<'a> {
-    pub fn render(&self, options: ParseResultOptions) -> String {
+impl<'a> InnerParseResult<'a> {
+    pub fn render(&self, options: ParseResultOptions) -> ParseResults {
+        let mut res = ParseResults::new(options);
         if self.full {
-            self.phrase.as_separated(options.separator)
+            res.with_full(self.phrase.as_separated(&res.options.separator));
         } else {
             let head = self.phrase.as_contiguous();
             let mid = format!(
-                "<{tag}>{head}{tail}</{tag}>",
-                tag = options.err_tag,
+                "{head}{tail}",
                 head = head.chars().last().unwrap_or(' '),
                 tail = &self.rest[0..2],
             );
-            format!(
-                "{}{}{}: <span class='{class}'>{msg}</span>",
-                &head[0..head.len() - 1],
-                &mid,
-                &self.rest[2..self.rest.len()],
-                class = options.msg_class,
-                msg = options.err_msg
-            )
+            let tail = self.rest[2..self.rest.len()].to_string();
+            res.with_partial(head[0..head.len() - 1].to_string(), mid, tail);
         }
+        res
     }
 }
 
-impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for ParseResult<'a> {
+impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for InnerParseResult<'a> {
     fn from(value: IResult<&'a str, Phrase<&'a str>>) -> Self {
         match value {
             Ok((rest, phrase)) => Self {
@@ -152,9 +189,9 @@ impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for ParseResult<'a> {
 
 #[wasm_bindgen]
 impl Phonotactic {
-    pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> String {
+    pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
         let s = self.parse_syllables(&input);
-        ParseResult::from(s).render(options)
+        InnerParseResult::from(s).render(options)
     }
     #[wasm_bindgen(getter)]
     pub fn name(&self) -> String {
@@ -202,10 +239,11 @@ impl<O: Copy> Phrase<O>
 where
     SyllableUnit<O>: Display,
 {
-    pub fn as_separated(&self, separator: Option<String>) -> String {
+    pub fn as_separated(&self, separator: &Option<String>) -> String {
+        let default_string = &String::from("·");
         let separator = match separator {
             Some(val) => val,
-            None => String::from("·"),
+            None => default_string,
         };
         self.syllables.iter().join(&separator)
     }
