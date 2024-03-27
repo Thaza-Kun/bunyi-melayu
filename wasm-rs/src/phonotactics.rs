@@ -3,7 +3,10 @@ mod tags;
 use itertools::Itertools;
 use nom::IResult;
 use serde::Deserialize;
-use std::fmt::Display;
+use std::{
+    fmt::{format, Display},
+    option,
+};
 use wasm_bindgen::prelude::*;
 
 use self::tags::SyllableTags;
@@ -78,24 +81,80 @@ impl From<SyllableTags<String>> for SyllableTagsJson {
     }
 }
 
+struct ParseResult<'a> {
+    full: bool,
+    rest: String,
+    phrase: Phrase<&'a str>,
+}
+
+#[wasm_bindgen]
+pub struct ParseResultOptions {
+    separator: Option<String>,
+    err_tag: String,
+    err_msg: String,
+    msg_class: String,
+}
+
+#[wasm_bindgen]
+impl ParseResultOptions {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        separator: Option<String>,
+        err_tag: String,
+        err_msg: String,
+        msg_class: String,
+    ) -> Self {
+        Self {
+            separator,
+            err_tag,
+            err_msg,
+            msg_class,
+        }
+    }
+}
+
+impl<'a> ParseResult<'a> {
+    pub fn render(&self, options: ParseResultOptions) -> String {
+        if self.full {
+            self.phrase.as_separated(options.separator)
+        } else {
+            let head = self.phrase.as_contiguous();
+            let mid = format!(
+                "<{tag}>{head}{tail}</{tag}>",
+                tag = options.err_tag,
+                head = head.chars().last().unwrap_or(' '),
+                tail = &self.rest[0..2],
+            );
+            format!(
+                "{}{}{}: <span class='{class}'>{msg}</span>",
+                &head[0..head.len() - 1],
+                &mid,
+                &self.rest[2..self.rest.len()],
+                class = options.msg_class,
+                msg = options.err_msg
+            )
+        }
+    }
+}
+
+impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for ParseResult<'a> {
+    fn from(value: IResult<&'a str, Phrase<&'a str>>) -> Self {
+        match value {
+            Ok((rest, phrase)) => Self {
+                full: rest.is_empty(),
+                rest: String::from(rest),
+                phrase: phrase,
+            },
+            Err(_) => todo!("Not implemented"),
+        }
+    }
+}
+
 #[wasm_bindgen]
 impl Phonotactic {
-    pub fn parse_string(&mut self, input: String, separator: Option<String>) -> String {
-        match self.parse_syllables(&input) {
-            Ok((_rest, phrase)) => {
-                if _rest.is_empty() {
-                    phrase.as_separated(separator)
-                } else {
-                    format!(
-                        "{} ...{} (Unable to parse)",
-                        phrase.as_separated(separator),
-                        _rest
-                    )
-                }
-            }
-            Err(e) => format!("Failed to parse: {}", e),
-        }
-        // .map(|(rest, parsed)| (String::from(rest), parsed.as_separated(None)))
+    pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> String {
+        let s = self.parse_syllables(&input);
+        ParseResult::from(s).render(options)
     }
     #[wasm_bindgen(getter)]
     pub fn name(&self) -> String {
@@ -149,6 +208,10 @@ where
             None => String::from("·"),
         };
         self.syllables.iter().join(&separator)
+    }
+
+    pub fn as_contiguous(&self) -> String {
+        self.syllables.iter().join(&"")
     }
 }
 

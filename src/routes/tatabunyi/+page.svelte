@@ -1,9 +1,10 @@
 <script lang="ts">
-	import init, { Phonotactic, parse_tatabunyi_toml } from 'wasm-rs';
+	import init, { Phonotactic, ParseResultOptions, parse_tatabunyi_toml } from 'wasm-rs';
 	import { onMount } from 'svelte';
 
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { Badge } from '$lib/components/ui/badge/index.js';
 
 	export let data;
 	$: input = '';
@@ -16,7 +17,13 @@
 	function updateText(value: string): void {
 		submission = input;
 	}
+	import * as HoverCard from '$lib/components/ui/hover-card';
 </script>
+
+<HoverCard.Root>
+	<HoverCard.Trigger>Hover</HoverCard.Trigger>
+	<HoverCard.Content>SvelteKit - Web development, streamlined</HoverCard.Content>
+</HoverCard.Root>
 
 <h1 class="h1 text-center">Tatabunyi</h1>
 <div class="m-4 flex flex-col items-center space-y-4">
@@ -35,10 +42,17 @@
 				{#each parse_tatabunyi_toml(data.tatabunyi) as t}
 					<dt>{t.name}</dt>
 					<dd>
-						▶ {t.parse_string(submission, ' / ')}
+						<!-- FIX: Hardcode the HTML return string for now. Don't want to introduce new struct to handle for the time being -->
+						▶ {@html t.parse_string(
+							submission,
+							new ParseResultOptions(' / ', 'u', '❔', 'parse-error')
+						)}
 					</dd>
 				{/each}
 			</dl>
 		</div>
 	{/if}
 </div>
+
+<style>
+</style>
