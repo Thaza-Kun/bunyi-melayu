@@ -58,11 +58,11 @@
 						{#each enumKeys(RantauBunyian) as rantau}
 							{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
 							{#if bunyi != undefined}
-								<td style="text-align: center;" class="jenis-{JenisJawi[bunyi.jenis_jawi]}">
+								<td class="cell jenis-{JenisJawi[bunyi.jenis_jawi]}">
 									{bunyi.jawi}
 								</td>
 							{:else}
-								<td style="background-color: black;"></td>
+								<td class="cell-empty"></td>
 							{/if}
 						{/each}
 					</tr>
@@ -85,11 +85,11 @@
 						{#each enumKeys(RantauBunyian) as rantau}
 							{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
 							{#if bunyi != undefined}
-								<td style="text-align: center;" class="jenis-{JenisJawi[bunyi.jenis_jawi]}">
+								<td class="cell">
 									{bunyi.rumi}
 								</td>
 							{:else}
-								<td style="background-color: black;"></td>
+								<td class="cell-empty"></td>
 							{/if}
 						{/each}
 					</tr>
@@ -112,11 +112,11 @@
 						{#each enumKeys(RantauBunyian) as rantau}
 							{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
 							{#if bunyi != undefined}
-								<td style="text-align: center;" class="jenis-{JenisJawi[bunyi.jenis_jawi]}">
+								<td class="cell">
 									{bunyi.ipa}
 								</td>
 							{:else}
-								<td style="background-color: black;"></td>
+								<td class="cell-empty"></td>
 							{/if}
 						{/each}
 					</tr>
@@ -127,13 +127,21 @@
 </Tabs.Root>
 
 <style>
-	.jenis-Kongsi {
-		background-color: yellow;
+	.cell {
+		text-align: center;
+		@apply font-semibold;
+		@apply bg-secondary;
 	}
-	.jenis-Ciptaan {
-		background-color: cyan;
+	.cell-empty {
+		@apply bg-muted;
+	}
+	.jenis-Kongsi {
+		@apply bg-primary;
 	}
 	.jenis-Arab {
-		background-color: orange;
+		@apply bg-secondary;
+	}
+	.jenis-Ciptaan {
+		@apply bg-accent;
 	}
 </style>

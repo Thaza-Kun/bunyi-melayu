@@ -35,7 +35,7 @@
 		on:submit|preventDefault={() => updateText(input)}
 	>
 		<Input type="text" placeholder="word" bind:value={input} />
-		<Button type="submit">Hantar</Button>
+		<Button type="submit" variant="default">Hantar</Button>
 	</form>
 
 	{#if submission != ''}
