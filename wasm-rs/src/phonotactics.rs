@@ -9,6 +9,8 @@ use std::{
 };
 use wasm_bindgen::prelude::*;
 
+use crate::functions::alert;
+
 use self::tags::SyllableTags;
 
 #[wasm_bindgen]
@@ -161,14 +163,27 @@ impl<'a> InnerParseResult<'a> {
         if self.full {
             res.with_full(self.phrase.as_separated(&res.options.separator));
         } else {
+            let mid_tail = if &self.rest.len() > &1 {
+                &self.rest[0..2]
+            } else {
+                self.rest.as_str()
+            };
+            let tail_rest = if &self.rest.len() > &1 {
+                self.rest[2..self.rest.len()].to_string()
+            } else {
+                "".into()
+            };
             let head = self.phrase.as_contiguous();
             let mid = format!(
                 "{head}{tail}",
                 head = head.chars().last().unwrap_or(' '),
-                tail = &self.rest[0..2],
+                tail = mid_tail,
             );
-            let tail = self.rest[2..self.rest.len()].to_string();
-            res.with_partial(head[0..head.len() - 1].to_string(), mid, tail);
+            res.with_partial(
+                head[0..head.len().saturating_sub(1)].to_string(),
+                mid,
+                tail_rest,
+            );
         }
         res
     }
@@ -182,7 +197,14 @@ impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for InnerParseResult<'a> {
                 rest: String::from(rest),
                 phrase: phrase,
             },
-            Err(_) => todo!("Not implemented"),
+            Err(e) => {
+                alert(&format!("{}", e));
+                Self {
+                    full: false,
+                    rest: "".into(),
+                    phrase: Phrase { syllables: vec![] },
+                }
+            }
         }
     }
 }
@@ -292,8 +314,35 @@ impl<O> From<(Option<O>, O, Option<O>)> for SyllableUnit<O> {
 mod test {
     use crate::phonotactics::Phonotactic;
 
-    use super::{tags::SyllableTags, Phrase, SyllableUnit};
+    use super::{tags::SyllableTags, ParseResultOptions, Phrase, SyllableUnit};
 
+    #[test]
+    fn test_panic_condition() {
+        // Test some combination of words here to get the compiler to panic
+        let word = "byi".to_string();
+        let definition = SyllableTags::new_ordered(
+            vec![
+                "ny", "ng", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y",
+                "w", "r",
+            ],
+            vec!["a", "e", "i", "o", "u"],
+            vec!["ng", "m", "n", "p", "t", "k", "s", "h", "l", "r"],
+        )
+        .as_string();
+        let mut malay_phonotactic = Phonotactic::new("Melayu Klasik".into(), definition.clone());
+        let result =
+            malay_phonotactic.parse_string(word, ParseResultOptions::new(Some("/".into())));
+        // let w = word.with_postprocessing(&definition);
+        // assert_eq!(
+        //     w.syllables,
+        //     vec![
+        //         SyllableUnit::from((Some("p"), "e", None)),
+        //         SyllableUnit::from((Some("n"), "e", None)),
+        //         SyllableUnit::from((Some("r"), "a", None)),
+        //         SyllableUnit::from((Some("ng"), "a", Some("n")))
+        //     ]
+        // );
+    }
     #[test]
     fn test_penerangan_melayu_lama() {
         let word = "penerangan".to_string();
