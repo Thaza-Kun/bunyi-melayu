@@ -130,7 +130,7 @@
 	.cell {
 		text-align: center;
 		@apply font-semibold;
-		@apply bg-secondary;
+		@apply bg-primary;
 	}
 	.cell-empty {
 		@apply bg-muted;
