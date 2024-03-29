@@ -12,9 +12,9 @@ jobs:
       - run: cargo test --manifest-path ./wasm-rs/Cargo.toml
       
       - name: Set Node.js 20.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 20
 
       - name: Run install
         uses: borales/actions-yarn@v4
