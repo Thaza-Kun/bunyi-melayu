@@ -10,4 +10,16 @@ jobs:
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
       - run: cargo test --manifest-path ./wasm-rs/Cargo.toml
-      - run: wasm-pack build ./wasm-rs --target web
+      
+      - name: Set Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+
+      - run: yarn wasm
+      - run: yarn build
