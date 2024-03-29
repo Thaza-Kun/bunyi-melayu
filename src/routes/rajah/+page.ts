@@ -6,6 +6,7 @@ import {
 	MakhrajTajwid,
 	parse_bunyian_toml
 } from 'wasm-rs';
+import { base } from '$app/paths';
 
 type Enums = typeof RantauBunyian | typeof KaedahBunyian | typeof JenisJawi;
 function enumKeys(items: Enums) {
@@ -13,7 +14,7 @@ function enumKeys(items: Enums) {
 }
 
 export async function load(event) {
-	const bunyian = await event.fetch('/Bunyian.toml');
+	const bunyian = await event.fetch(`${base}/Bunyian.toml`);
 	function table(items: Bunyian[]): Map<string, Map<string, Bunyian | undefined>> {
 		return new Map(
 			Array.from(enumKeys(RantauBunyian)).map((r) => [
