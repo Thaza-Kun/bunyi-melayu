@@ -9,7 +9,7 @@ jobs:
       - name: Install
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
-      - run: cargo test
-      - run: wasm-pack test --headless --chrome
-      - run: wasm-pack test --headless --firefox
+      - run: cargo test --manifest-path ./wasm-rs/Cargo.toml
+      - run: wasm-pack test --headless --chrome ./wasm-rs
+      - run: wasm-pack test --headless --firefox ./wasm-rs
       - run: wasm-pack build ./wasm-rs --target web
