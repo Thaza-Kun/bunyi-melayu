@@ -1,153 +1,19 @@
+default = "Melayu Moden"
+
 [[phonotactic]]
 name = "Melayu Lama"
-definition.onset = [
-    [
-        "ny",
-        "ng",
-        "m",
-        "n",
-        "p",
-        "t",
-        "c",
-        "k",
-        "b",
-        "d",
-        "j",
-        "g",
-        "s",
-        "h",
-        "l",
-        "y",
-        "w",
-        "r",
-    ],
-]
+definition.onset = [["ny", "ng", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y", "w", "r"]]
 definition.nucleus = [["a", "e", "i", "o", "u"]]
 definition.coda = [["ng", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]
 
 [[phonotactic]]
 name = "Melayu Klasik"
-definition.onset = [
-    [
-        "kh",
-        "sy",
-        "gh",
-        "ny",
-        "ng",
-        "q",
-        "f",
-        "m",
-        "n",
-        "p",
-        "t",
-        "c",
-        "k",
-        "b",
-        "d",
-        "j",
-        "g",
-        "s",
-        "h",
-        "l",
-        "y",
-        "w",
-        "r",
-    ],
-]
+definition.onset = [["kh", "sy", "gh", "ny", "ng", "q", "f", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y", "w", "r"]]
 definition.nucleus = [["a", "e", "i", "o", "u"]]
-definition.coda = [
-    [
-        "kh",
-        "sy",
-        "gh",
-        "ng",
-        "q",
-        "f",
-        "b",
-        "m",
-        "n",
-        "p",
-        "t",
-        "k",
-        "s",
-        "h",
-        "l",
-        "r",
-    ],
-]
+definition.coda = [["kh", "sy", "gh", "ng", "q", "f", "b", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]
 
 [[phonotactic]]
 name = "Melayu Moden"
-definition.onset = [
-    [
-        "sp",
-        "spr",
-        "sw",
-        "sk",
-        "skr",
-        "st",
-        "str",
-        "kl",
-        "fl",
-        "bl",
-        "pl",
-        "pr",
-        "kr",
-        "gr",
-        "tr",
-        "dr",
-        "kh",
-        "sy",
-        "gh",
-        "ny",
-        "ng",
-        "v",
-        "x",
-        "q",
-        "f",
-        "y",
-        "w",
-        "m",
-        "n",
-        "p",
-        "t",
-        "c",
-        "k",
-        "b",
-        "d",
-        "j",
-        "g",
-        "s",
-        "h",
-        "l",
-        "r",
-    ],
-]
+definition.onset = [["sp", "spr", "sw", "sk", "skr", "st", "str", "kl", "fl", "bl", "pl", "pr", "kr", "gr", "tr", "dr", "kh", "sy", "gh", "ny", "ng", "v", "x", "q", "f", "y", "w", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "r"]]
 definition.nucleus = [["a", "e", "i", "o", "u"]]
-definition.coda = [
-    [
-        "ks",
-        "ns",
-        "nk",
-        "lf",
-        "rt",
-        "rd",
-        "rt",
-        "kh",
-        "sy",
-        "gh",
-        "ng",
-        "q",
-        "f",
-        "b",
-        "m",
-        "n",
-        "p",
-        "t",
-        "k",
-        "s",
-        "h",
-        "l",
-        "r",
-    ],
-]
+definition.coda = [["ks", "ns", "nk", "lf", "rt", "rd", "rt", "kh", "sy", "gh", "ng", "q", "f", "b", "m", "n", "p", "t", "k", "s", "h", "l", "r"]]
