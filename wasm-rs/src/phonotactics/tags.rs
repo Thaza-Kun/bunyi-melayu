@@ -8,15 +8,15 @@ use serde::Deserialize;
 
 use super::{Phrase, SyllableUnit};
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Default)]
 pub(crate) struct AltTagVec<T> {
     pub(crate) items: Vec<T>,
     #[serde(skip)]
     index: usize,
 }
 
-#[derive(Clone, Deserialize)]
-pub(crate) struct SyllableTags<T> {
+#[derive(Clone, Deserialize, Default)]
+pub struct SyllableTags<T> {
     pub(crate) onset: AltTagVec<T>,
     pub(crate) nucleus: AltTagVec<T>,
     pub(crate) coda: AltTagVec<T>,
@@ -30,21 +30,21 @@ impl<T: Ord + InputLength> AltTagVec<T> {
 }
 
 impl<T> AltTagVec<T> {
-    pub fn new(mut items: Vec<T>) -> Self {
+    pub fn new(items: Vec<T>) -> Self {
         Self { items, index: 0 }
     }
 }
 
 impl AltTagVec<String> {
-    pub fn as_str(&mut self) -> AltTagVec<&str> {
-        let new = self.items.iter_mut().map(|a| a.as_str()).collect();
+    pub fn as_str(&self) -> AltTagVec<&str> {
+        let new = self.items.iter().map(|a| a.as_str()).collect();
         AltTagVec::<&str>::new_ordered(new)
     }
 }
 
 impl AltTagVec<&'_ str> {
-    pub fn as_string(&mut self) -> AltTagVec<String> {
-        let new = self.items.iter_mut().map(|a| String::from(*a)).collect();
+    pub fn as_string(&self) -> AltTagVec<String> {
+        let new = self.items.iter().map(|a| String::from(*a)).collect();
         AltTagVec::<String>::new(new)
     }
 }
@@ -77,7 +77,7 @@ impl<T> SyllableTags<T> {
 }
 
 impl SyllableTags<String> {
-    pub fn as_str(&mut self) -> SyllableTags<&str> {
+    pub fn as_str(&self) -> SyllableTags<&str> {
         SyllableTags::<&str>::new(
             self.onset.as_str().items,
             self.nucleus.as_str().items,

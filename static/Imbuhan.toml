@@ -1,0 +1,109 @@
+[[imbuhan]]
+ganti.awal = { "" = "ng", "k" = "ng", "g" = "ngg", "h" = "ng", "q" = "ngq", "b" = "mb", "v" = "mv", "f" = "mf", "p" = "m", "c" = "nc", "d" = "nd", "j" = "nj", "sy" = "nsy", "t" = "n", "z" = "z", "s" = "ny" }
+untuk = ["kata kerja"]
+awal = "me"
+
+[[imbuhan]]
+ganti.awal = { "" = "ng", "k" = "ng", "g" = "ngg", "h" = "ng", "q" = "ngq", "b" = "mb", "v" = "mv", "f" = "mf", "p" = "m", "c" = "nc", "d" = "nd", "j" = "nj", "sy" = "nsy", "t" = "n", "z" = "z", "s" = "ny" }
+untuk = ["kata nama"]
+awal = "pe"
+
+[[imbuhan]]
+untuk = ["kata nama"]
+awal = "pe"
+
+[[imbuhan]]
+untuk = ["kata nama"]
+awal = "per"
+
+[[imbuhan]]
+untuk = ["kata nama", "kata kerja"]
+awal = "juru"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "ber"
+
+[[imbuhan]]
+untuk = ["kata kerja", "kata sifat"]
+awal = "ter"
+
+[[imbuhan]]
+untuk = ["kata sifat"]
+awal = "se"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "di"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "per"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "memper"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "diper"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+akhir = "i"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+akhir = "kan"
+
+[[imbuhan]]
+untuk = ["kata nama"]
+akhir = "an"
+
+[[imbuhan]]
+ganti.awal = { "" = "ng", "k" = "ng", "g" = "ngg", "h" = "ng", "q" = "ngq", "b" = "mb", "v" = "mv", "f" = "mf", "p" = "m", "c" = "nc", "d" = "nd", "j" = "nj", "sy" = "nsy", "t" = "n", "z" = "z", "s" = "ny" }
+untuk = ["kata kerja"]
+awal = "me"
+akhir = "kan"
+
+[[imbuhan]]
+ganti.awal = { "" = "ng", "k" = "ng", "g" = "ngg", "h" = "ng", "q" = "ngq", "b" = "mb", "v" = "mv", "f" = "mf", "p" = "m", "c" = "nc", "d" = "nd", "j" = "nj", "sy" = "nsy", "t" = "n", "z" = "z", "s" = "ny" }
+untuk = ["kata nama"]
+awal = "pe"
+akhir = "an"
+
+[[imbuhan]]
+untuk = ["kata nama"]
+awal = "per"
+akhir = "an"
+
+[[imbuhan]]
+ganti.awal = { "" = "ng", "k" = "ng", "g" = "ngg", "h" = "ng", "q" = "ngq", "b" = "mb", "v" = "mv", "f" = "mf", "p" = "m", "c" = "nc", "d" = "nd", "j" = "nj", "sy" = "nsy", "t" = "n", "z" = "z", "s" = "ny" }
+untuk = ["kata kerja"]
+awal = "me"
+akhir = "i"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "memper"
+akhir = "kan"
+
+[[imbuhan]]
+untuk = ["kata nama", "kata kerja", "kata sifat"]
+awal = "ke"
+akhir = "an"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "di"
+akhir = "i"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "di"
+akhir = "kan"
+
+[[imbuhan]]
+untuk = ["kata kerja"]
+awal = "diper"
+akhir = "kan"

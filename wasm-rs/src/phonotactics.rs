@@ -1,4 +1,4 @@
-mod tags;
+pub mod tags;
 
 use itertools::Itertools;
 use nom::IResult;
@@ -14,7 +14,7 @@ use crate::functions::alert;
 use self::tags::SyllableTags;
 
 #[wasm_bindgen]
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Default)]
 pub struct Phonotactic {
     name: String,
     definition: SyllableTags<String>,
@@ -24,28 +24,27 @@ impl Phonotactic {
     pub fn new(name: String, definition: SyllableTags<String>) -> Self {
         Self { name, definition }
     }
-    pub fn parse_syllables<'a>(
-        &'a mut self,
-        input: &'a String,
-    ) -> IResult<&'a str, Phrase<&'a str>> {
+    pub fn parse_syllables<'a>(&'a self, input: &'a String) -> IResult<&'a str, Phrase<&'a str>> {
         self.definition
             .as_str()
             .parse_tags(&input)
             .map(|(r, p)| (r, p.with_postprocessing(&self.definition)))
     }
 }
+
 #[derive(Deserialize)]
 pub struct PhonotacticToml {
+    pub(crate) default: String,
     phonotactic: Vec<Phonotactic>,
 }
 
 impl PhonotacticToml {
-    pub fn from_toml_str(data: String) -> Result<Vec<Phonotactic>, toml::de::Error> {
+    pub fn from_toml_str(data: String) -> Result<Self, toml::de::Error> {
         let d: Self = toml::from_str(&data)?;
-        Ok(d.get_phonotatics())
+        Ok(d)
     }
 
-    pub fn get_phonotatics(&self) -> Vec<Phonotactic> {
+    pub fn get_phonotactics(&self) -> Vec<Phonotactic> {
         self.phonotactic.clone()
     }
 }
@@ -212,7 +211,8 @@ impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for InnerParseResult<'a> {
 #[wasm_bindgen]
 impl Phonotactic {
     pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
-        let s = self.parse_syllables(&input);
+        let text = input.to_lowercase();
+        let s = self.parse_syllables(&text);
         InnerParseResult::from(s).render(options)
     }
     #[wasm_bindgen(getter)]
@@ -226,7 +226,7 @@ impl Phonotactic {
 }
 
 pub struct Phrase<O: Copy> {
-    syllables: Vec<SyllableUnit<O>>,
+    pub(crate) syllables: Vec<SyllableUnit<O>>,
 }
 
 impl<'a> Phrase<&'a str> {
@@ -282,10 +282,10 @@ impl<O: Copy> From<Vec<SyllableUnit<O>>> for Phrase<O> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-struct SyllableUnit<O> {
-    onset: Option<O>,
-    nucleus: O,
-    coda: Option<O>,
+pub(crate) struct SyllableUnit<O> {
+    pub(crate) onset: Option<O>,
+    pub(crate) nucleus: O,
+    pub(crate) coda: Option<O>,
 }
 
 impl<'a> Display for SyllableUnit<&'a str> {

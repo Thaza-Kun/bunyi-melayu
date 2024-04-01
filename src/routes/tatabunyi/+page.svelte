@@ -3,7 +3,9 @@
 		Phonotactic,
 		ParseResults,
 		ParseResultOptions,
-		parse_tatabunyi_toml
+		parse_tatabunyi_toml,
+		parse_default_tatabunyi_toml,
+		parse_imbuhan_toml
 	} from 'wasm-rs';
 	import { onMount } from 'svelte';
 
@@ -12,6 +14,9 @@
 	import { Badge } from '$lib/components/ui/badge/index.js';
 
 	export let data;
+	$: kata_nama = true;
+	$: kata_kerja = false;
+	$: kata_sifat = false;
 	$: input = '';
 	$: submission = '';
 
@@ -60,6 +65,28 @@
 					</dd>
 				{/each}
 			</dl>
+			<hr />
+			<h2>Imbuhan</h2>
+			<div>
+				<label>
+					<input type="checkbox" bind:checked={kata_nama} /> kata nama
+				</label>
+				<label>
+					<input type="checkbox" bind:checked={kata_kerja} /> kata kerja
+				</label>
+				<label>
+					<input type="checkbox" bind:checked={kata_sifat} /> kata sifat
+				</label>
+			</div>
+			<ul>
+				{#each parse_imbuhan_toml(data.imbuhan) as i}
+					{#if i.contains(kata_nama, kata_kerja, kata_sifat)}
+						<li>
+							- {i.transform_string_with(submission, parse_default_tatabunyi_toml(data.tatabunyi))}
+						</li>
+					{/if}
+				{/each}
+			</ul>
 		</div>
 	{/if}
 </div>
