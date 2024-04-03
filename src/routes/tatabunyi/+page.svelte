@@ -12,6 +12,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Badge } from '$lib/components/ui/badge/index.js';
+	import { Label } from '$lib/components/ui/label';
+	import * as PopOver from '$lib/components/ui/popover';
+	import * as RadioGroup from '$lib/components/ui/radio-group';
 
 	export let data;
 	$: kata_nama = true;
@@ -27,9 +30,24 @@
 	function updateText(value: string): void {
 		submission = input;
 	}
-	import * as HoverCard from '$lib/components/ui/hover-card';
 	function getParsed(t: Phonotactic, input: string, options: ParseResultOptions): ParseResults {
 		return t.parse_string(input, options);
+	}
+
+	function changeValues(value: string): void {
+		if (value == 'kata-nama') {
+			kata_nama = true;
+			kata_kerja = false;
+			kata_sifat = false;
+		} else if (value == 'kata-kerja') {
+			kata_kerja = true;
+			kata_nama = false;
+			kata_sifat = false;
+		} else if (value == 'kata-sifat') {
+			kata_sifat = true;
+			kata_nama = false;
+			kata_kerja = false;
+		}
 	}
 </script>
 
@@ -54,39 +72,46 @@
 						- {#if !val.error}
 							{val.full}
 						{:else}
-							<HoverCard.Root>
-								<HoverCard.Trigger><Badge variant="destructive">!</Badge></HoverCard.Trigger>
-								<HoverCard.Content
-									>Gugusan '-{val.mid}-' tidak dikenali dalam tatabunyi {t.name.toLowerCase()}</HoverCard.Content
+							<PopOver.Root>
+								<PopOver.Trigger><Badge variant="destructive">!</Badge></PopOver.Trigger>
+								<PopOver.Content
+									>Gugusan '-{val.mid}-' tidak dikenali dalam tatabunyi {t.name.toLowerCase()}</PopOver.Content
 								>
-							</HoverCard.Root>
+							</PopOver.Root>
 							{val.head}<strong><u>{val.mid}</u></strong>{val.tail}
 						{/if}
 					</dd>
 				{/each}
 			</dl>
-			<hr />
-			<h2>Imbuhan</h2>
-			<div>
-				<label>
-					<input type="checkbox" bind:checked={kata_nama} /> kata nama
-				</label>
-				<label>
-					<input type="checkbox" bind:checked={kata_kerja} /> kata kerja
-				</label>
-				<label>
-					<input type="checkbox" bind:checked={kata_sifat} /> kata sifat
-				</label>
+			<hr class="m-4" />
+			<div class="grid grid-cols-3">
+				<div class="col-span-2">
+					{#each parse_imbuhan_toml(data.imbuhan) as i}
+						{#if i.contains(kata_nama, kata_kerja, kata_sifat)}
+							<Badge variant="outline">
+								{i.transform_string_with(submission, parse_default_tatabunyi_toml(data.tatabunyi))}
+							</Badge>
+						{/if}
+					{/each}
+				</div>
+				<div class="col-span-1">
+					<h2 class="my-2">Imbuhan</h2>
+					<RadioGroup.Root value="kata-nama" onValueChange={changeValues}>
+						<div class="flex items-center space-x-2">
+							<RadioGroup.Item value="kata-nama" id="kata-nama" />
+							<Label for="kata-nama">Kata Nama</Label>
+						</div>
+						<div class="flex items-center space-x-2">
+							<RadioGroup.Item value="kata-kerja" id="kata-kerja" />
+							<Label for="kata-kerja">Kata Kerja</Label>
+						</div>
+						<div class="flex items-center space-x-2">
+							<RadioGroup.Item value="kata-sifat" id="kata-sifat" />
+							<Label for="kata-sifat">Kata Sifat</Label>
+						</div>
+					</RadioGroup.Root>
+				</div>
 			</div>
-			<ul>
-				{#each parse_imbuhan_toml(data.imbuhan) as i}
-					{#if i.contains(kata_nama, kata_kerja, kata_sifat)}
-						<li>
-							- {i.transform_string_with(submission, parse_default_tatabunyi_toml(data.tatabunyi))}
-						</li>
-					{/if}
-				{/each}
-			</ul>
 		</div>
 	{/if}
 </div>
