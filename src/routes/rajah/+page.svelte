@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { Bunyian, RantauBunyian, KaedahBunyian, JenisJawi, parse_bunyian_toml } from 'wasm-rs';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
+	import Table from './Table.svelte';
 
 	export let data;
 	let items: Bunyian[] = [];
@@ -15,9 +16,46 @@
 		phoneticTable = data.table(items);
 	});
 
-	function enumKeys(items: Enums) {
-		return Object.values(items).filter((v) => isNaN(Number(v)));
+	function enumKeys(items: Enums): string[] {
+		return Object.values(items).filter((v) => isNaN(Number(v))) as string[];
 	}
+
+	let rantau_bunyi_names = {
+		Dwibibir: 'dwibibir',
+		BibirGusi: 'bibir-gusi',
+		LelangitGusi: 'lelangit-gusi',
+		Lelangit: 'lelangit',
+		LelangitLembut: 'lelangit lembut',
+		AnakTekak: 'anak tekak',
+		Tekak: 'tekak'
+	};
+	let rantau_bunyi_shortnames = {
+		Dwibibir: 'DB',
+		BibirGusi: 'BG',
+		LelangitGusi: 'LG',
+		Lelangit: 'L',
+		LelangitLembut: 'LL',
+		AnakTekak: 'AT',
+		Tekak: 'T'
+	};
+	let kaedah_bunyi_names = {
+		Sengauan: 'sengauan',
+		LetusanBersuara: 'letusan bersuara',
+		LetusanTakBersuara: 'letusan tak bersuara',
+		GeseranBersuara: 'geseran bersuara',
+		GeseranTakBersuara: 'geseran tak bersuara',
+		MalaranTakGeser: 'malaran tak geser',
+		Getaran: 'getaran'
+	};
+	let kaedah_bunyi_shortnames = {
+		Sengauan: 'S',
+		LetusanBersuara: 'LB',
+		LetusanTakBersuara: 'LXB',
+		GeseranBersuara: 'GB',
+		GeseranTakBersuara: 'GXB',
+		MalaranTakGeser: 'MXG',
+		Getaran: 'G'
+	};
 
 	function getPhoneticKey(
 		table: Map<string, Map<string, Bunyian | undefined>>,
@@ -37,111 +75,19 @@
 </script>
 
 <h1 class="h1 text-center">Fonologi Moden</h1>
-<Tabs.Root>
+<Tabs.Root class="mx-auto max-w-7xl">
 	<Tabs.List class="mx-auto grid max-w-sm grid-flow-col justify-stretch">
 		<Tabs.Trigger value="jawi">Jawi</Tabs.Trigger>
 		<Tabs.Trigger value="rumi">Rumi</Tabs.Trigger>
 		<Tabs.Trigger value="ipa">IPA</Tabs.Trigger>
 	</Tabs.List>
 	<Tabs.Content value="jawi">
-		<table class="table">
-			<thead>
-				<th scope="col"></th>
-				{#each enumKeys(RantauBunyian) as rantau}
-					<th scope="col">{rantau}</th>
-				{/each}
-			</thead>
-			<tbody>
-				{#each enumKeys(KaedahBunyian) as kaedah}
-					<tr>
-						<th scope="row">{kaedah}</th>
-						{#each enumKeys(RantauBunyian) as rantau}
-							{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
-							{#if bunyi != undefined}
-								<td class="cell jenis-{JenisJawi[bunyi.jenis_jawi]}">
-									{bunyi.jawi}
-								</td>
-							{:else}
-								<td class="cell-empty"></td>
-							{/if}
-						{/each}
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+		<Table field="jawi" {phoneticTable} />
 	</Tabs.Content>
 	<Tabs.Content value="rumi">
-		<table class="table">
-			<thead>
-				<th scope="col"></th>
-				{#each enumKeys(RantauBunyian) as rantau}
-					<th scope="col">{rantau}</th>
-				{/each}
-			</thead>
-			<tbody>
-				{#each enumKeys(KaedahBunyian) as kaedah}
-					<tr>
-						<th scope="row">{kaedah}</th>
-						{#each enumKeys(RantauBunyian) as rantau}
-							{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
-							{#if bunyi != undefined}
-								<td class="cell">
-									{bunyi.rumi}
-								</td>
-							{:else}
-								<td class="cell-empty"></td>
-							{/if}
-						{/each}
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+		<Table field="rumi" {phoneticTable} />
 	</Tabs.Content>
 	<Tabs.Content value="ipa">
-		<table class="table">
-			<thead>
-				<th scope="col"></th>
-				{#each enumKeys(RantauBunyian) as rantau}
-					<th scope="col">{rantau}</th>
-				{/each}
-			</thead>
-			<tbody>
-				{#each enumKeys(KaedahBunyian) as kaedah}
-					<tr>
-						<th scope="row">{kaedah}</th>
-						{#each enumKeys(RantauBunyian) as rantau}
-							{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
-							{#if bunyi != undefined}
-								<td class="cell">
-									{bunyi.ipa}
-								</td>
-							{:else}
-								<td class="cell-empty"></td>
-							{/if}
-						{/each}
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+		<Table field="ipa" {phoneticTable} />
 	</Tabs.Content>
 </Tabs.Root>
-
-<style>
-	.cell {
-		text-align: center;
-		@apply font-semibold;
-		@apply bg-primary;
-	}
-	.cell-empty {
-		@apply bg-muted;
-	}
-	.jenis-Kongsi {
-		@apply bg-primary;
-	}
-	.jenis-Arab {
-		@apply bg-secondary;
-	}
-	.jenis-Ciptaan {
-		@apply bg-accent;
-	}
-</style>

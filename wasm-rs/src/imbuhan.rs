@@ -73,7 +73,12 @@ impl Imbuhan {
                                 a.get("").unwrap_or(default).clone()
                             };
                             let tail = text[offset..].to_string();
-                            format!("{}{}{}", awal.clone(), inbetween, tail)
+                            format!(
+                                "{}{}{}",
+                                awal.clone().to_lowercase(),
+                                inbetween.to_lowercase(),
+                                tail.to_lowercase()
+                            )
                         } else {
                             String::new()
                         }
