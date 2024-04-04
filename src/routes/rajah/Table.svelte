@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { Bunyian, RantauBunyian, KaedahBunyian, JenisJawi } from 'wasm-rs';
+	import { Bunyian, RantauBunyian, KaedahBunyian, JenisJawi, JenisSengauan } from 'wasm-rs';
+	import { Switch } from '$lib/components/ui/switch/index';
+
+	export let nasalization: Boolean = false;
 	type Enums = typeof RantauBunyian | typeof KaedahBunyian | typeof JenisJawi;
 
 	export let field: string;
@@ -61,11 +64,11 @@
 	};
 </script>
 
-<table class="table">
+<table class="min-w-xl mx-auto table-fixed">
 	<thead>
 		<th scope="col"></th>
 		{#each enumKeys(RantauBunyian) as rantau}
-			<th scope="col" class="text-center"
+			<th scope="col" class="header"
 				><span class="hidden md:block">{rantau_bunyi_names[rantau]}</span>
 				<span class="visible md:hidden">{rantau_bunyi_shortnames[rantau]}</span></th
 			>
@@ -74,7 +77,7 @@
 	<tbody>
 		{#each enumKeys(KaedahBunyian) as kaedah}
 			<tr>
-				<th scope="row" class="text-center"
+				<th scope="row" class="header row-head"
 					><span class="hidden text-right md:block">{kaedah_bunyi_names[kaedah]}</span>
 					<span class="visible md:hidden">{kaedah_bunyi_shortnames[kaedah]}</span></th
 				>
@@ -82,8 +85,18 @@
 					{@const bunyi = getPhoneticKey(phoneticTable, rantau, kaedah)}
 					{#if bunyi != undefined}
 						{#if field == 'jawi'}
-							<td class="cell jenis-{JenisJawi[bunyi.jenis_jawi]}">
-								{bunyi[field]}
+							{#if nasalization}
+								<td class="cell sengau-{JenisSengauan[bunyi.nasalization_type]}">
+									{bunyi.nasalized(field) ? bunyi.nasalized(field) : ''}
+								</td>
+							{:else}
+								<td class="cell jenis-{JenisJawi[bunyi.jenis_jawi]}">
+									{bunyi[field]}
+								</td>
+							{/if}
+						{:else if nasalization}
+							<td class="cell sengau-{JenisSengauan[bunyi.nasalization_type]}">
+								{bunyi.nasalized(field) ? bunyi.nasalized(field) : ''}
 							</td>
 						{:else}
 							<td class="cell">
@@ -99,11 +112,21 @@
 	</tbody>
 </table>
 
-{#if field == 'jawi'}
+{#if field == 'jawi' && !nasalization}
 	<div class="mx-auto my-4 flex max-w-2xl justify-evenly">
 		<div class="jenis-Kongsi rounded-xl px-2">Bunyi Melayu</div>
 		<div class="jenis-Arab rounded-xl px-2">Bunyi Arab</div>
 		<div class="jenis-Ciptaan rounded-xl px-2">Tulisan Ciptaan</div>
+	</div>
+{/if}
+
+{#if nasalization}
+	<div class="mx-auto my-4 flex max-w-2xl flex-wrap justify-evenly">
+		<div class="sengau-Mim rounded-xl px-2">Sengau mim</div>
+		<div class="sengau-Nun rounded-xl px-2">Sengau nun</div>
+		<div class="sengau-Nya rounded-xl px-2">Sengau nya</div>
+		<div class="sengau-Nga rounded-xl px-2">Sengau nga</div>
+		<div class="sengau-Unchanged rounded-xl px-2">Tiada perubahan</div>
 	</div>
 {/if}
 
@@ -137,10 +160,17 @@
 </div>
 
 <style>
+	.header {
+		@apply px-2 text-center md:w-20;
+	}
+	.row-head {
+		@apply md:w-28;
+	}
 	.cell {
 		text-align: center;
 		@apply font-semibold;
 		@apply bg-primary;
+		@apply size-16 p-3 md:size-16;
 	}
 	.cell-empty {
 		@apply bg-muted;
@@ -153,5 +183,25 @@
 	}
 	.jenis-Ciptaan {
 		@apply bg-accent;
+	}
+	.sengau-Mim {
+		@apply bg-primary;
+	}
+	.sengau-Nun {
+		@apply bg-secondary;
+	}
+	.sengau-Nya {
+		@apply bg-accent;
+	}
+	.sengau-Nga {
+		@apply bg-muted;
+		@apply border-2 border-primary;
+	}
+	.sengau-Unchanged {
+		@apply bg-muted;
+		@apply border-2 border-accent;
+	}
+	.sengau-undefined {
+		@apply cell-empty;
 	}
 </style>
