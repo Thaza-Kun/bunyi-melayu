@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
 use toml;
 use wasm_bindgen::prelude::*;
@@ -13,6 +15,8 @@ pub struct Bunyian {
     rumi: String,
     #[serde(alias = "IPA")]
     ipa: String,
+    nasalized: HashMap<String, String>,
+    pub nasalization_type: Option<JenisSengauan>,
 }
 
 #[wasm_bindgen]
@@ -27,6 +31,8 @@ impl Bunyian {
             jenis_jawi: JenisJawi::Kongsi,
             rumi: "".into(),
             ipa: "".into(),
+            nasalized: HashMap::new(),
+            nasalization_type: None,
         }
     }
 
@@ -42,6 +48,10 @@ impl Bunyian {
     pub fn ipa(&self) -> String {
         String::from(&self.ipa)
     }
+
+    pub fn nasalized(&self, script: String) -> Option<String> {
+        self.nasalized.get(&script).map(|a| a.to_owned())
+    }
 }
 
 #[derive(Deserialize)]
@@ -54,6 +64,17 @@ impl BunyianToml {
         let d: Self = toml::from_str(&data)?;
         Ok(d.bunyian)
     }
+}
+
+#[wasm_bindgen]
+#[derive(Serialize, Deserialize, Clone, Copy)]
+#[serde(rename_all = "kebab-case")]
+pub enum JenisSengauan {
+    Mim,
+    Nun,
+    Nya,
+    Nga,
+    Unchanged,
 }
 
 #[wasm_bindgen]
@@ -76,14 +97,14 @@ pub enum RantauBunyian {
 #[serde(rename_all = "lowercase")]
 pub enum KaedahBunyian {
     Sengauan,
-    #[serde(rename = "letusan bersuara")]
-    LetusanBersuara,
     #[serde(rename = "letusan tak bersuara")]
     LetusanTakBersuara,
-    #[serde(rename = "geseran bersuara")]
-    GeseranBersuara,
+    #[serde(rename = "letusan bersuara")]
+    LetusanBersuara,
     #[serde(rename = "geseran tak bersuara")]
     GeseranTakBersuara,
+    #[serde(rename = "geseran bersuara")]
+    GeseranBersuara,
     #[serde(rename = "malaran tak geser")]
     MalaranTakGeser,
     Getaran,

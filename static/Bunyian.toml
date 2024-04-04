@@ -6,6 +6,8 @@ makhraj = "dua bibir"
 jenis_jawi = "kongsi"
 rumi = "m"
 IPA = "m"
+nasalized = { "jawi" = "ـمـ", rumi = "-m-", "ipa" = "-m-" }
+nasalization_type = "mim"
 
 [[bunyian]]
 rantau = "lelangit-gusi"
@@ -15,6 +17,8 @@ makhraj = "hujung lidah"
 jenis_jawi = "kongsi"
 rumi = "n"
 IPA = "n"
+nasalized = { "jawi" = "ـنـ", rumi = "-n-", "ipa" = "-n-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit"
@@ -23,6 +27,8 @@ jawi = "ڽ"
 jenis_jawi = "ciptaan"
 rumi = "ny"
 IPA = "ɲ"
+nasalized = { "jawi" = "ـڽـ", rumi = "-ny-", "ipa" = "-ɲ-" }
+nasalization_type = "nya"
 
 [[bunyian]]
 rantau = "lelangit lembut"
@@ -31,174 +37,212 @@ jawi = "ڠ"
 jenis_jawi = "ciptaan"
 rumi = "ng"
 IPA = "ŋ"
+nasalized = { "jawi" = "ـڠـ", rumi = "-ng-", "ipa" = "-ŋ-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "dwibibir"
-kaedah = "letusan bersuara"
+kaedah = "letusan tak bersuara"
 jawi = "ڤ"
 jenis_jawi = "ciptaan"
 rumi = "p"
 IPA = "p"
+nasalized = { "jawi" = "ـمـ", rumi = "-m-", "ipa" = "-m-" }
+nasalization_type = "mim"
 
 [[bunyian]]
 rantau = "lelangit-gusi"
-kaedah = "letusan bersuara"
+kaedah = "letusan tak bersuara"
 jawi = "ت"
 makhraj = "hujung lidah"
 jenis_jawi = "kongsi"
 rumi = "t"
 IPA = "t"
+nasalized = { "jawi" = "ـنـ", rumi = "-n-", "ipa" = "-n-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit"
-kaedah = "letusan bersuara"
+kaedah = "letusan tak bersuara"
 jawi = "چ"
 jenis_jawi = "ciptaan"
 rumi = "c"
 IPA = "t͡ʃ"
+nasalized = { "jawi" = "ـنچـ", rumi = "-nc-", "ipa" = "-nt͡ʃ-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit lembut"
-kaedah = "letusan bersuara"
+kaedah = "letusan tak bersuara"
 jawi = "ك"
 makhraj = "pangkal lidah"
 jenis_jawi = "kongsi"
 rumi = "k"
 IPA = "k"
+nasalized = { "jawi" = "ـڠـ", rumi = "-ng-", "ipa" = "-ŋ-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "anak tekak"
-kaedah = "letusan bersuara"
+kaedah = "letusan tak bersuara"
 jawi = "ق"
 makhraj = "pangkal lidah"
 jenis_jawi = "arab"
 rumi = "q"
 IPA = "q"
+nasalized = { "jawi" = "ـنقـ", rumi = "-nq-", "ipa" = "-ŋq-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "tekak"
-kaedah = "letusan bersuara"
-jawi = "ع/-ق"
+kaedah = "letusan tak bersuara"
+jawi = "ع/ ـق"
 makhraj = "tengah halkum"
 jenis_jawi = "kongsi"
 rumi = "-k/'"
 IPA = "ʔ"
+nasalized = {}
 
 [[bunyian]]
 rantau = "dwibibir"
-kaedah = "letusan tak bersuara"
+kaedah = "letusan bersuara"
 jawi = "ب"
 makhraj = "dua bibir"
 jenis_jawi = "kongsi"
 rumi = "b"
 IPA = "b"
+nasalized = { "jawi" = "ـمبـ", rumi = "-mb-", "ipa" = "-mb-" }
+nasalization_type = "mim"
 
 [[bunyian]]
 rantau = "lelangit-gusi"
-kaedah = "letusan tak bersuara"
+kaedah = "letusan bersuara"
 jawi = "د"
 makhraj = "hujung lidah"
 jenis_jawi = "kongsi"
 rumi = "d"
 IPA = "d"
+nasalized = { "jawi" = "ـند", rumi = "-nd-", "ipa" = "-nd-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit"
-kaedah = "letusan tak bersuara"
+kaedah = "letusan bersuara"
 jawi = "ج"
 makhraj = "tengah lidah"
 jenis_jawi = "kongsi"
 rumi = "j"
 IPA = "d͡ʒ"
+nasalized = { "jawi" = "ـنجـ", rumi = "-nj-", "ipa" = "-nd͡ʒ-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit lembut"
-kaedah = "letusan tak bersuara"
-jawi = "ڬ"
+kaedah = "letusan bersuara"
+jawi = "ڬـ"
 jenis_jawi = "ciptaan"
 rumi = "g"
 IPA = "g"
+nasalized = { "jawi" = "ـڠڬـ", rumi = "-ngg-", "ipa" = "-ŋg-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "dwibibir"
-kaedah = "geseran bersuara"
+kaedah = "geseran tak bersuara"
 jawi = "ف"
 makhraj = "dua bibir"
 jenis_jawi = "arab"
 rumi = "f"
 IPA = "f"
+nasalized = { "jawi" = "ـمفـ", rumi = "-mf-", "ipa" = "-mf-" }
+nasalization_type = "mim"
 
 [[bunyian]]
 rantau = "bibir-gusi"
-kaedah = "geseran bersuara"
+kaedah = "geseran tak bersuara"
 jawi = "ث"
 makhraj = "hujung lidah"
 jenis_jawi = "arab"
 rumi = "s"
 IPA = "θ"
+nasalized = {}
 
 [[bunyian]]
 rantau = "lelangit-gusi"
-kaedah = "geseran bersuara"
+kaedah = "geseran tak bersuara"
 jawi = "س"
 makhraj = "hujung lidah"
 jenis_jawi = "kongsi"
 rumi = "s"
 IPA = "s"
+nasalized = { "jawi" = "ـڽـ", rumi = "-ny-", "ipa" = "-ɲ-" }
+nasalization_type = "nya"
 
 [[bunyian]]
 rantau = "lelangit"
-kaedah = "geseran bersuara"
+kaedah = "geseran tak bersuara"
 jawi = "ش"
 makhraj = "tengah lidah"
 jenis_jawi = "arab"
 rumi = "sy"
 IPA = "ʃ"
+nasalized = { "jawi" = "ـنشـ", rumi = "-nsy-", "ipa" = "-nʃ-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit lembut"
-kaedah = "geseran bersuara"
+kaedah = "geseran tak bersuara"
 jawi = "خ"
 makhraj = "hujung halkum"
 jenis_jawi = "arab"
 rumi = "kh"
 IPA = "x"
+nasalized = { "jawi" = "ـڠخـ", rumi = "-ngkh-", "ipa" = "-ŋx-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "tekak"
-kaedah = "geseran bersuara"
+kaedah = "geseran tak bersuara"
 jawi = "ه"
 jenis_jawi = "kongsi"
 makhraj = "pangkal halkum"
 rumi = "h"
 IPA = "h"
+nasalized = { "jawi" = "ـڠهـ", rumi = "-ngh-", "ipa" = "-ŋh-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "bibir-gusi"
-kaedah = "geseran tak bersuara"
+kaedah = "geseran bersuara"
 jawi = "ذ"
 makhraj = "hujung lidah"
 jenis_jawi = "arab"
 rumi = "z"
 IPA = "ð"
+nasalized = { "jawi" = "ـنذ", rumi = "-nz-", "ipa" = "-nð-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit-gusi"
-kaedah = "geseran tak bersuara"
+kaedah = "geseran bersuara"
 jawi = "ز"
 makhraj = "hujung lidah"
 jenis_jawi = "kongsi"
 rumi = "z"
 IPA = "z"
+nasalized = { "jawi" = "ـنز", rumi = "-nz-", "ipa" = "-nz-" }
+nasalization_type = "nun"
 
 [[bunyian]]
 rantau = "lelangit lembut"
-kaedah = "geseran tak bersuara"
+kaedah = "geseran bersuara"
 jawi = "غ"
 makhraj = "hujung halkum"
 jenis_jawi = "arab"
 rumi = "gh"
 IPA = "ɣ"
+nasalized = { "jawi" = "ـڠغـ", rumi = "-nggh-", "ipa" = "-ŋɣ-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "lelangit-gusi"
@@ -208,6 +252,8 @@ makhraj = "tepi lidah"
 jenis_jawi = "kongsi"
 rumi = "l"
 IPA = "l"
+nasalized = { "jawi" = "ـل", rumi = "-l-", "ipa" = "-l-" }
+nasalization_type = "unchanged"
 
 [[bunyian]]
 rantau = "lelangit"
@@ -217,6 +263,8 @@ makhraj = "tengah lidah"
 jenis_jawi = "kongsi"
 rumi = "y"
 IPA = "j"
+nasalized = { "jawi" = "ـيـ", rumi = "-y-", "ipa" = "-j-" }
+nasalization_type = "unchanged"
 
 [[bunyian]]
 rantau = "lelangit lembut"
@@ -226,6 +274,8 @@ makhraj = "dua bibir"
 jenis_jawi = "kongsi"
 rumi = "w"
 IPA = "w"
+nasalized = { "jawi" = "ـو", rumi = "-w-", "ipa" = "-w-" }
+nasalization_type = "unchanged"
 
 [[bunyian]]
 rantau = "lelangit-gusi"
@@ -235,3 +285,5 @@ makhraj = "hujung lidah"
 jenis_jawi = "kongsi"
 rumi = "r"
 IPA = "r"
+nasalized = { "jawi" = "ـر", rumi = "-r-", "ipa" = "-r-" }
+nasalization_type = "unchanged"
