@@ -57,8 +57,8 @@
 		class="flex w-full max-w-sm items-center space-x-4"
 		on:submit|preventDefault={() => updateText(input)}
 	>
-		<Input type="text" placeholder="word" bind:value={input} />
-		<Button type="submit" variant="default">Hantar</Button>
+		<Input type="text" placeholder="perkataan" bind:value={input} />
+		<Button type="submit" variant="secondary">Hantar</Button>
 	</form>
 
 	{#if submission != ''}

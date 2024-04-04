@@ -2,92 +2,51 @@
 	import init from 'wasm-rs';
 	import { onMount } from 'svelte';
 	import { Bunyian, RantauBunyian, KaedahBunyian, JenisJawi, parse_bunyian_toml } from 'wasm-rs';
-	import * as Tabs from '$lib/components/ui/tabs/index.js';
+
+	import * as Tabs from '$lib/components/ui/tabs/index';
+	import * as PopOver from '$lib/components/ui/popover';
+	import { Badge } from '$lib/components/ui/badge';
 	import Table from './Table.svelte';
+	import { Switch } from '$lib/components/ui/switch/index';
 
 	export let data;
+	let nasalization: Boolean = false;
 	let items: Bunyian[] = [];
 	let phoneticTable: Map<string, Map<string, Bunyian | undefined>>;
-	type Enums = typeof RantauBunyian | typeof KaedahBunyian | typeof JenisJawi;
 
 	onMount(async () => {
 		await init(); // init initializes memory addresses needed by WASM and that will be used by JS/TS
 		items = parse_bunyian_toml(data.bunyian);
 		phoneticTable = data.table(items);
 	});
-
-	function enumKeys(items: Enums): string[] {
-		return Object.values(items).filter((v) => isNaN(Number(v))) as string[];
-	}
-
-	let rantau_bunyi_names = {
-		Dwibibir: 'dwibibir',
-		BibirGusi: 'bibir-gusi',
-		LelangitGusi: 'lelangit-gusi',
-		Lelangit: 'lelangit',
-		LelangitLembut: 'lelangit lembut',
-		AnakTekak: 'anak tekak',
-		Tekak: 'tekak'
-	};
-	let rantau_bunyi_shortnames = {
-		Dwibibir: 'DB',
-		BibirGusi: 'BG',
-		LelangitGusi: 'LG',
-		Lelangit: 'L',
-		LelangitLembut: 'LL',
-		AnakTekak: 'AT',
-		Tekak: 'T'
-	};
-	let kaedah_bunyi_names = {
-		Sengauan: 'sengauan',
-		LetusanBersuara: 'letusan bersuara',
-		LetusanTakBersuara: 'letusan tak bersuara',
-		GeseranBersuara: 'geseran bersuara',
-		GeseranTakBersuara: 'geseran tak bersuara',
-		MalaranTakGeser: 'malaran tak geser',
-		Getaran: 'getaran'
-	};
-	let kaedah_bunyi_shortnames = {
-		Sengauan: 'S',
-		LetusanBersuara: 'LB',
-		LetusanTakBersuara: 'LXB',
-		GeseranBersuara: 'GB',
-		GeseranTakBersuara: 'GXB',
-		MalaranTakGeser: 'MXG',
-		Getaran: 'G'
-	};
-
-	function getPhoneticKey(
-		table: Map<string, Map<string, Bunyian | undefined>>,
-		rantau: string,
-		kaedah: string
-	): Bunyian | undefined {
-		if (table != undefined) {
-			let r = table.get(rantau);
-			if (r != undefined) {
-				let b = r.get(kaedah);
-				return b;
-			}
-			return;
-		}
-		return;
-	}
 </script>
 
-<h1 class="h1 text-center">Fonologi Moden</h1>
-<Tabs.Root class="mx-auto max-w-7xl">
-	<Tabs.List class="mx-auto grid max-w-sm grid-flow-col justify-stretch">
-		<Tabs.Trigger value="jawi">Jawi</Tabs.Trigger>
-		<Tabs.Trigger value="rumi">Rumi</Tabs.Trigger>
-		<Tabs.Trigger value="ipa">IPA</Tabs.Trigger>
-	</Tabs.List>
-	<Tabs.Content value="jawi">
-		<Table field="jawi" {phoneticTable} />
-	</Tabs.Content>
-	<Tabs.Content value="rumi">
-		<Table field="rumi" {phoneticTable} />
-	</Tabs.Content>
-	<Tabs.Content value="ipa">
-		<Table field="ipa" {phoneticTable} />
-	</Tabs.Content>
-</Tabs.Root>
+<div class="mx-auto flex max-w-2xl flex-col place-items-center">
+	<h1>Rajah Bunyi</h1>
+	<Tabs.Root class="mx-auto flex max-w-7xl flex-col">
+		<Tabs.List class="mx-24 justify-around">
+			<Tabs.Trigger value="jawi">Jawi</Tabs.Trigger>
+			<Tabs.Trigger value="rumi">Rumi</Tabs.Trigger>
+			<Tabs.Trigger value="ipa">IPA</Tabs.Trigger>
+		</Tabs.List>
+		<div class="mx-auto flex place-content-center space-x-2 py-4">
+			<Switch bind:checked={nasalization} /><span> Sengaukan </span>
+			<PopOver.Root>
+				<PopOver.Trigger><Badge>?</Badge></PopOver.Trigger>
+				<PopOver.Content
+					>Penyegauan bunyi ialah perubahan bunyi apabila dipertemukan dengan unsur bunyi sengau
+					(seperti dalam imbuhan meN- dan peN-)</PopOver.Content
+				>
+			</PopOver.Root>
+		</div>
+		<Tabs.Content value="jawi">
+			<Table field="jawi" {phoneticTable} {nasalization} />
+		</Tabs.Content>
+		<Tabs.Content value="rumi">
+			<Table field="rumi" {phoneticTable} {nasalization} />
+		</Tabs.Content>
+		<Tabs.Content value="ipa">
+			<Table field="ipa" {phoneticTable} {nasalization} />
+		</Tabs.Content>
+	</Tabs.Root>
+</div>
