@@ -51,7 +51,13 @@
 	}
 </script>
 
-<h1 class="h1 text-center">Tatabunyi</h1>
+<h1>
+	<ruby class="flex flex-col">
+		<rt class="text-center font-mono text-2xl">&laquo; Tatabunyi &raquo;</rt>
+		<span>📝 <span class="font-mono text-6xl">تاتابوڽي</span> 📰</span>
+	</ruby>
+</h1>
+
 <div class="m-4 flex flex-col items-center space-y-4">
 	<form
 		class="flex w-full max-w-sm items-center space-x-4"
