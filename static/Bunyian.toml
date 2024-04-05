@@ -90,8 +90,8 @@ makhraj = "pangkal lidah"
 jenis_jawi = "arab"
 rumi = "q"
 IPA = "q"
-nasalized = { "jawi" = "ـنقـ", rumi = "-nq-", "ipa" = "-ŋq-" }
-nasalization_type = "nun"
+nasalized = { "jawi" = "ـڠقـ", rumi = "-ngq-", "ipa" = "-ŋq-" }
+nasalization_type = "nga"
 
 [[bunyian]]
 rantau = "tekak"
