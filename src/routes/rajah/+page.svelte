@@ -21,32 +21,35 @@
 	});
 </script>
 
-<div class="mx-auto flex max-w-2xl flex-col place-items-center">
-	<h1>Rajah Bunyi</h1>
-	<Tabs.Root class="mx-auto flex max-w-7xl flex-col">
-		<Tabs.List class="mx-24 justify-around">
-			<Tabs.Trigger value="jawi">Jawi</Tabs.Trigger>
-			<Tabs.Trigger value="rumi">Rumi</Tabs.Trigger>
-			<Tabs.Trigger value="ipa">IPA</Tabs.Trigger>
-		</Tabs.List>
-		<div class="mx-auto flex place-content-center space-x-2 py-4">
-			<Switch bind:checked={nasalization} /><span> Sengaukan </span>
-			<PopOver.Root>
-				<PopOver.Trigger><Badge>?</Badge></PopOver.Trigger>
-				<PopOver.Content
-					>Penyegauan bunyi ialah perubahan bunyi apabila dipertemukan dengan unsur bunyi sengau
-					(seperti dalam imbuhan meN- dan peN-)</PopOver.Content
-				>
-			</PopOver.Root>
-		</div>
-		<Tabs.Content value="jawi">
-			<Table field="jawi" {phoneticTable} {nasalization} />
-		</Tabs.Content>
-		<Tabs.Content value="rumi">
-			<Table field="rumi" {phoneticTable} {nasalization} />
-		</Tabs.Content>
-		<Tabs.Content value="ipa">
-			<Table field="ipa" {phoneticTable} {nasalization} />
-		</Tabs.Content>
-	</Tabs.Root>
-</div>
+<h1>
+	<ruby class="flex flex-col">
+		<rt class="text-center font-mono text-2xl">&laquo; Rajah Bunyi &raquo;</rt>
+		<span>🗨 <span class="font-mono text-6xl">راجه بوڽي</span> 💬</span>
+	</ruby>
+</h1>
+<Tabs.Root class="mx-auto flex max-w-7xl flex-col">
+	<Tabs.List class="mx-24 justify-around">
+		<Tabs.Trigger value="jawi">Jawi</Tabs.Trigger>
+		<Tabs.Trigger value="rumi">Rumi</Tabs.Trigger>
+		<Tabs.Trigger value="ipa">IPA</Tabs.Trigger>
+	</Tabs.List>
+	<div class="mx-auto flex place-content-center space-x-2 py-4">
+		<Switch bind:checked={nasalization} /><span> Sengaukan </span>
+		<PopOver.Root>
+			<PopOver.Trigger><Badge>?</Badge></PopOver.Trigger>
+			<PopOver.Content
+				>Penyegauan bunyi ialah perubahan bunyi apabila dipertemukan dengan unsur bunyi sengau
+				(seperti dalam imbuhan meN- dan peN-)</PopOver.Content
+			>
+		</PopOver.Root>
+	</div>
+	<Tabs.Content value="jawi">
+		<Table field="jawi" {phoneticTable} {nasalization} />
+	</Tabs.Content>
+	<Tabs.Content value="rumi">
+		<Table field="rumi" {phoneticTable} {nasalization} />
+	</Tabs.Content>
+	<Tabs.Content value="ipa">
+		<Table field="ipa" {phoneticTable} {nasalization} />
+	</Tabs.Content>
+</Tabs.Root>

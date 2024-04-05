@@ -21,7 +21,7 @@
 		--input: 0 0% 89.8%;
 
 		--primary: 201 60% 68%;
-		--primary-foreground: 0 0% 98%;
+		--primary-foreground: 211 100% 40%;
 
 		--secondary: 187 60% 75%;
 		--secondary-foreground: 0 0% 9%;
@@ -79,6 +79,25 @@
 
 	h1 {
 		@apply my-6 text-3xl font-extrabold;
+	}
+	h2 {
+		@apply my-2 text-2xl font-black;
+	}
+
+	li > a,
+	p > a {
+		@apply text-primary-foreground underline;
+	}
+
+	p {
+		@apply text-justify;
+	}
+
+	ol {
+		@apply ml-8 mt-3 list-decimal;
+	}
+	ul {
+		@apply ml-8 list-disc;
 	}
 
 	dt {

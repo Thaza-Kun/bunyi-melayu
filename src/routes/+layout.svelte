@@ -11,5 +11,7 @@
 	</nav>
 </header>
 <body>
-	<slot />
+	<div class="mx-auto flex max-w-2xl flex-col place-items-center">
+		<slot />
+	</div>
 </body>
