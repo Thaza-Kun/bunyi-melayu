@@ -170,6 +170,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "onc"
+version = "0.1.0"
+dependencies = [
+ "itertools",
+ "nom",
+ "serde",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -357,7 +366,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "itertools",
- "nom",
+ "onc",
  "serde",
  "serde-wasm-bindgen",
  "toml",

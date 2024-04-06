@@ -1,17 +1,11 @@
-pub mod tags;
+use onc::phonotactics::tags::SyllableTags;
+use onc::phonotactics::Phrase;
+use onc::IResult;
 
-use itertools::Itertools;
-use nom::IResult;
 use serde::Deserialize;
-use std::{
-    fmt::{format, Display},
-    option,
-};
 use wasm_bindgen::prelude::*;
 
 use crate::functions::alert;
-
-use self::tags::SyllableTags;
 
 #[wasm_bindgen]
 #[derive(Deserialize, Clone, Default)]
@@ -26,7 +20,7 @@ impl Phonotactic {
     }
     pub fn parse_syllables<'a>(&'a self, input: &'a String) -> IResult<&'a str, Phrase<&'a str>> {
         self.definition
-            .as_str()
+            .as_str
             .parse_tags(&input)
             .map(|(r, p)| (r, p.with_postprocessing(&self.definition)))
     }
@@ -51,9 +45,9 @@ impl PhonotacticToml {
 
 #[wasm_bindgen]
 pub struct SyllableTagsJson {
-    onset: Vec<String>,
-    nucleus: Vec<String>,
-    coda: Vec<String>,
+    pub(crate) onset: Vec<String>,
+    pub(crate) nucleus: Vec<String>,
+    pub(crate) coda: Vec<String>,
 }
 
 #[wasm_bindgen]
@@ -222,91 +216,6 @@ impl Phonotactic {
     #[wasm_bindgen(getter)]
     pub fn tags(&self) -> SyllableTagsJson {
         self.definition.clone().into()
-    }
-}
-
-pub struct Phrase<O: Copy> {
-    pub(crate) syllables: Vec<SyllableUnit<O>>,
-}
-
-impl<'a> Phrase<&'a str> {
-    fn with_postprocessing(mut self, tags: &'a SyllableTags<String>) -> Self {
-        let cloned = self.syllables.clone();
-        for (index, (lead, lag)) in cloned.iter().tuple_windows().enumerate() {
-            match (lead.coda, lag.onset) {
-                (Some(s), None) => {
-                    self.syllables[index].coda = None;
-                    self.syllables[index + 1].onset = Some(s);
-                }
-                (Some(s), Some(t)) => {
-                    let t: Vec<&'a String> = Vec::from_iter(
-                        tags.onset
-                            .items
-                            .iter()
-                            .filter(|a| a == &&format!("{}{}", &s, &t)),
-                    );
-                    if t.len() != 0 {
-                        self.syllables[index].coda = None;
-                        self.syllables[index + 1].onset = t.first().map(|a| a.as_str());
-                    }
-                }
-                (_, _) => {}
-            }
-        }
-        self
-    }
-}
-
-impl<O: Copy> Phrase<O>
-where
-    SyllableUnit<O>: Display,
-{
-    pub fn as_separated(&self, separator: &Option<String>) -> String {
-        let default_string = &String::from("·");
-        let separator = match separator {
-            Some(val) => val,
-            None => default_string,
-        };
-        self.syllables.iter().join(&separator)
-    }
-
-    pub fn as_contiguous(&self) -> String {
-        self.syllables.iter().join(&"")
-    }
-}
-
-impl<O: Copy> From<Vec<SyllableUnit<O>>> for Phrase<O> {
-    fn from(value: Vec<SyllableUnit<O>>) -> Self {
-        Self { syllables: value }
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub(crate) struct SyllableUnit<O> {
-    pub(crate) onset: Option<O>,
-    pub(crate) nucleus: O,
-    pub(crate) coda: Option<O>,
-}
-
-impl<'a> Display for SyllableUnit<&'a str> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}{}{}",
-            self.onset.unwrap_or(""),
-            self.nucleus,
-            self.coda.unwrap_or("")
-        )
-    }
-}
-
-impl<O> From<(Option<O>, O, Option<O>)> for SyllableUnit<O> {
-    fn from(value: (Option<O>, O, Option<O>)) -> Self {
-        Self {
-            onset: value.0,
-            nucleus: value.1,
-            coda: value.2,
-        }
     }
 }
 
