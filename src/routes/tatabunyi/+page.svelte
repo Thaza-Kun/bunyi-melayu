@@ -88,7 +88,7 @@
 		</h2>
 		<dl>
 			{#each parse_tatabunyi_toml(data.tatabunyi) as t}
-				{@const val = getParsed(t, submission, new ParseResultOptions(' &#x1F784; '))}
+				{@const val = getParsed(t, submission, new ParseResultOptions(' / '))}
 				<dt>{t.name}</dt>
 				<dd>
 					- {#if !val.error}
