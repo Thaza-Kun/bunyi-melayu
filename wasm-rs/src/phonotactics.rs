@@ -20,7 +20,7 @@ impl Phonotactic {
     }
     pub fn parse_syllables<'a>(&'a self, input: &'a String) -> IResult<&'a str, Phrase<&'a str>> {
         self.definition
-            .as_str
+            .as_str()
             .parse_tags(&input)
             .map(|(r, p)| (r, p.with_postprocessing(&self.definition)))
     }
