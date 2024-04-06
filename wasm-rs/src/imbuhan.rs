@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -59,7 +58,7 @@ impl Imbuhan {
                     awal: Some(a),
                     akhir: _,
                 }) => {
-                    if let Ok((rest, phrase)) = phonotactic.parse_syllables(&text) {
+                    if let Ok((_rest, phrase)) = phonotactic.parse_syllables(&text) {
                         if let Some(first) = phrase.syllables.first() {
                             let mut offset = 0;
                             let default = &"".to_string();
@@ -91,7 +90,7 @@ impl Imbuhan {
                     akhir: Some(a),
                     awal: _,
                 }) => {
-                    if let Ok((rest, phrase)) = phonotactic.parse_syllables(&text) {
+                    if let Ok((_rest, phrase)) = phonotactic.parse_syllables(&text) {
                         if let Some(first) = phrase.syllables.first() {
                             let mut offset = 0;
                             let default = &"".to_string();
