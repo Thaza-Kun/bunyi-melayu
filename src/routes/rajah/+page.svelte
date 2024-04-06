@@ -21,6 +21,7 @@
 	});
 </script>
 
+<!-- TODO: ADD Contoh penyegauan eg.:'nj' -> 'menjadi'-->
 <h1>
 	<ruby class="flex flex-col">
 		<rt class="text-center font-mono text-2xl">&laquo; Rajah Bunyi &raquo;</rt>

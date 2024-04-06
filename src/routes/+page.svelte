@@ -44,10 +44,7 @@
 					Perkataan-perkataan asing (yang tidak mematuhi sistem ejaan bahasa Melayu) dapat ditapis
 					dari ayat yang rojak.
 				</li>
-				<li>
-					Perkataan yang sama boleh ditukar-tukar cara ejaan mengikut sistem ejaan berbeza.
-					Contohnya, 'buku' (ejaan Rumi Baharu) &rArr; 'boekoe' (ejaan Belanda).
-				</li>
+				<li>Perkataan yang sama boleh ditukar-tukar cara ejaan mengikut sistem ejaan berbeza.</li>
 			</ul>
 		</li>
 		<li>
@@ -73,7 +70,4 @@
 </div>
 
 <style>
-	.note {
-		@apply mb-5 mt-2 w-[80%] border-b border-t border-blue-500 bg-blue-100 px-4 py-3;
-	}
 </style>
