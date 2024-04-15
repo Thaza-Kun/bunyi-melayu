@@ -1,5 +1,5 @@
 use onc::phonotactics::tags::SyllableTags;
-use onc::phonotactics::Phrase;
+use onc::phonotactics::{PhonotacticRule, Phrase};
 use onc::IResult;
 
 use serde::Deserialize;
@@ -14,15 +14,27 @@ pub struct Phonotactic {
     definition: SyllableTags<String>,
 }
 
-impl Phonotactic {
-    pub fn new(name: String, definition: SyllableTags<String>) -> Self {
-        Self { name, definition }
+impl From<Phonotactic> for PhonotacticRule {
+    fn from(value: Phonotactic) -> Self {
+        PhonotacticRule::with_definitions(value.definition)
     }
-    pub fn parse_syllables<'a>(&'a self, input: &'a String) -> IResult<&'a str, Phrase<&'a str>> {
-        self.definition
-            .as_str()
-            .parse_tags(&input)
-            .map(|(r, p)| (r, p.with_postprocessing(&self.definition)))
+}
+
+#[wasm_bindgen]
+impl Phonotactic {
+    pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
+        let text = input.to_lowercase();
+        let rule = PhonotacticRule::from(self.clone());
+        let s = rule.parse_syllables(&text);
+        InnerParseResult::from(s).render(options)
+    }
+    #[wasm_bindgen(getter)]
+    pub fn name(&self) -> String {
+        self.name.clone()
+    }
+    #[wasm_bindgen(getter)]
+    pub fn tags(&self) -> SyllableTagsJson {
+        self.definition.clone().into()
     }
 }
 
@@ -199,23 +211,6 @@ impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for InnerParseResult<'a> {
                 }
             }
         }
-    }
-}
-
-#[wasm_bindgen]
-impl Phonotactic {
-    pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
-        let text = input.to_lowercase();
-        let s = self.parse_syllables(&text);
-        InnerParseResult::from(s).render(options)
-    }
-    #[wasm_bindgen(getter)]
-    pub fn name(&self) -> String {
-        self.name.clone()
-    }
-    #[wasm_bindgen(getter)]
-    pub fn tags(&self) -> SyllableTagsJson {
-        self.definition.clone().into()
     }
 }
 

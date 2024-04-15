@@ -1,3 +1,5 @@
+use onc::phonotactics::PhonotacticRule;
+
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
@@ -58,7 +60,9 @@ impl Imbuhan {
                     awal: Some(a),
                     akhir: _,
                 }) => {
-                    if let Ok((_rest, phrase)) = phonotactic.parse_syllables(&text) {
+                    if let Ok((_rest, phrase)) =
+                        PhonotacticRule::from(phonotactic.clone()).parse_syllables(&text)
+                    {
                         if let Some(first) = phrase.syllables.first() {
                             let mut offset = 0;
                             let default = &"".to_string();
@@ -90,7 +94,9 @@ impl Imbuhan {
                     akhir: Some(a),
                     awal: _,
                 }) => {
-                    if let Ok((_rest, phrase)) = phonotactic.parse_syllables(&text) {
+                    if let Ok((_rest, phrase)) =
+                        PhonotacticRule::from(phonotactic.clone()).parse_syllables(&text)
+                    {
                         if let Some(first) = phrase.syllables.first() {
                             let mut offset = 0;
                             let default = &"".to_string();
