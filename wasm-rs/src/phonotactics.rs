@@ -14,20 +14,25 @@ pub struct Phonotactic {
     definition: SyllableTags<String>,
 }
 
-impl From<Phonotactic> for PhonotacticRule {
-    fn from(value: Phonotactic) -> Self {
-        PhonotacticRule::with_definitions(value.definition)
-    }
-}
+// impl From<Phonotactic> for PhonotacticRule {
+//     fn from(value: Phonotactic) -> Self {
+//         PhonotacticRule::with_definitions(value.definition)
+//     }
+// }
 
 #[wasm_bindgen]
 impl Phonotactic {
     pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
         let text = input.to_lowercase();
-        let rule = PhonotacticRule::from(self.clone());
+        let rule = self.as_rule();
         let s = rule.parse_syllables(&text);
         InnerParseResult::from(s).render(options)
     }
+
+    pub(crate) fn as_rule(&self) -> PhonotacticRule {
+        PhonotacticRule::with_definitions(self.definition.clone())
+    }
+
     #[wasm_bindgen(getter)]
     pub fn name(&self) -> String {
         self.name.clone()
