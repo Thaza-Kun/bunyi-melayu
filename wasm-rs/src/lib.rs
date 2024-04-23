@@ -1,7 +1,7 @@
-mod functions;
-mod imbuhan;
-mod phonology;
-mod phonotactics;
+pub mod functions;
+pub mod imbuhan;
+pub mod phonology;
+pub mod phonotactics;
 
-// TODO: BUG PLASTIK SEPATUTNYA PLAS/TIK BUKAN PLA/STIK
-// TODO: BUG SWASTA SEPATUTNYA SWAS/TA BUKAN SWA/STA
+// TODO: Pindahkan Imbuhan ke onc
+// TODO: Pindahkan Phonology ke onc
