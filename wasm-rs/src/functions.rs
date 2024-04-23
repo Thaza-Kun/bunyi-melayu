@@ -38,12 +38,8 @@ pub fn parse_tatabunyi_toml(data: String) -> Vec<Phonotactic> {
 pub fn parse_default_tatabunyi_toml(data: String) -> Phonotactic {
     match PhonotacticToml::from_toml_str(data) {
         Ok(v) => v
-            .get_phonotactics()
-            .iter()
-            .filter(|p| p.name() == v.default)
-            .collect::<Vec<&Phonotactic>>()
-            .first()
-            .unwrap_or(&&Phonotactic::default())
+            .get_default_phonotactic()
+            .unwrap_or(Phonotactic::default())
             .to_owned()
             .clone(),
         Err(e) => {

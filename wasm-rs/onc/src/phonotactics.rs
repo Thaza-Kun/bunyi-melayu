@@ -107,3 +107,38 @@ impl<O> From<(Option<O>, O, Option<O>)> for SyllableUnit<O> {
         }
     }
 }
+
+// TODO: BUG PLASTIK SEPATUTNYA PLAS/TIK BUKAN PLA/STIK
+// TODO: BUG SWASTA SEPATUTNYA SWAS/TA BUKAN SWA/STA
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn main() {
+        // TODO Make a list of string to test and iterate through all.
+        let word = "penerangan".to_string();
+        let definition = SyllableTags::new_ordered(
+            vec![
+                "ny", "ng", "m", "n", "p", "t", "c", "k", "b", "d", "j", "g", "s", "h", "l", "y",
+                "w", "r",
+            ],
+            vec!["a", "e", "i", "o", "u"],
+            vec!["ng", "m", "n", "p", "t", "k", "s", "h", "l", "r"],
+        )
+        .as_string();
+        let phonotactic = PhonotacticRule::with_definitions(definition.to_owned());
+
+        let (_rest, word) = phonotactic.parse_syllables(&word).expect("Error");
+        let w = word.with_postprocessing(&definition);
+        assert_eq!(
+            w.syllables,
+            vec![
+                SyllableUnit::from((Some("p"), "e", None)),
+                SyllableUnit::from((Some("n"), "e", None)),
+                SyllableUnit::from((Some("r"), "a", None)),
+                SyllableUnit::from((Some("ng"), "a", Some("n")))
+            ]
+        );
+    }
+}
