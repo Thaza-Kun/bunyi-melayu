@@ -5,7 +5,7 @@ awal = "me"
 
 [[imbuhan]]
 ganti.awal = { "" = "ng", "k" = "ng", "g" = "ngg", "h" = "ng", "q" = "ngq", "b" = "mb", "v" = "mv", "f" = "mf", "p" = "m", "c" = "nc", "d" = "nd", "j" = "nj", "sy" = "nsy", "t" = "n", "z" = "z", "s" = "ny" }
-untuk = ["kata nama"]
+untuk = ["kata kerja"]
 awal = "pe"
 
 [[imbuhan]]

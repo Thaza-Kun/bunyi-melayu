@@ -4,6 +4,8 @@ use serde::{Deserialize, Serialize};
 use toml;
 use wasm_bindgen::prelude::*;
 
+// COMMENT: Perhaps no need to move this to onc crate because all these are just representations of data with no attached logic.
+
 #[wasm_bindgen]
 #[derive(Deserialize)]
 pub struct Bunyian {
