@@ -11,7 +11,8 @@
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
 		"modulize-wasm": "node ./wasm-rs/modulize.js",
-		"wasm": "wasm-pack build ./wasm-rs --target web && yarn run modulize-wasm"
+		"wasm": "wasm-pack build ./wasm-rs --target web && yarn run modulize-wasm",
+		"test": "cargo test --manifest-path ./wasm-rs/Cargo.toml --workspace"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
