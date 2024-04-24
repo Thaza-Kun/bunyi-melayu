@@ -1,5 +1,3 @@
-use std::io::Stdout;
-
 use nom::{
     bytes::complete::tag_no_case, combinator::opt, error::ParseError, multi::many0,
     sequence::tuple, Compare, IResult, InputLength, InputTake, Parser,
@@ -9,17 +7,17 @@ use serde::Deserialize;
 use super::{Phrase, SyllableUnit};
 
 #[derive(Clone, Deserialize, Default)]
-pub(crate) struct AltTagVec<T> {
-    pub(crate) items: Vec<T>,
+pub struct AltTagVec<T> {
+    pub items: Vec<T>,
     #[serde(skip)]
     index: usize,
 }
 
 #[derive(Clone, Deserialize, Default)]
 pub struct SyllableTags<T> {
-    pub(crate) onset: AltTagVec<T>,
-    pub(crate) nucleus: AltTagVec<T>,
-    pub(crate) coda: AltTagVec<T>,
+    pub onset: AltTagVec<T>,
+    pub nucleus: AltTagVec<T>,
+    pub coda: AltTagVec<T>,
 }
 
 impl<T: Ord + InputLength> AltTagVec<T> {
