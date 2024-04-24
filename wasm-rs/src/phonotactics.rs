@@ -1,11 +1,9 @@
 use onc::phonotactics::tags::SyllableTags;
-use onc::phonotactics::{PhonotacticRule, Phrase};
-use onc::IResult;
+use onc::phonotactics::PhonotacticRule;
+use onc::ParseResult as InnerParseResult;
 
 use serde::Deserialize;
 use wasm_bindgen::prelude::*;
-
-use crate::functions::alert;
 
 #[wasm_bindgen]
 #[derive(Deserialize, Clone, Default)]
@@ -14,29 +12,18 @@ pub struct Phonotactic {
     definition: SyllableTags<String>,
 }
 
-// impl From<Phonotactic> for PhonotacticRule {
-//     fn from(value: Phonotactic) -> Self {
-//         PhonotacticRule::with_definitions(value.definition)
-//     }
-// }
-
+#[wasm_bindgen]
 impl Phonotactic {
-    pub fn as_rule(&self) -> PhonotacticRule {
+    pub(crate) fn as_rule(&self) -> PhonotacticRule {
         PhonotacticRule::with_definitions(self.definition.clone())
     }
 
-    pub fn definitions(&self) -> SyllableTags<String> {
-        self.definition.clone()
-    }
-}
-
-#[wasm_bindgen]
-impl Phonotactic {
+    #[wasm_bindgen]
     pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
         let text = input.to_lowercase();
         let rule = self.as_rule();
         let s = rule.parse_syllables(&text);
-        InnerParseResult::from(s).render(options)
+        ParseResults::from_inner(&InnerParseResult::from(s), options)
     }
 
     #[wasm_bindgen(getter)]
@@ -109,12 +96,6 @@ impl From<SyllableTags<String>> for SyllableTagsJson {
     }
 }
 
-struct InnerParseResult<'a> {
-    full: bool,
-    rest: String,
-    phrase: Phrase<&'a str>,
-}
-
 // TODO: Proper Result
 #[wasm_bindgen]
 pub struct ParseResults {
@@ -157,8 +138,36 @@ impl ParseResults {
             options,
             full: None,
             partial: None,
-            // details: "".into(),
         }
+    }
+    pub(crate) fn from_inner(inner: &InnerParseResult, options: ParseResultOptions) -> Self {
+        let mut res = ParseResults::new(options);
+        if inner.full {
+            res.with_full(inner.phrase.as_separated(&res.options.separator));
+        } else {
+            let mid_tail = if &inner.rest.len() > &1 {
+                &inner.rest[0..2]
+            } else {
+                inner.rest.as_str()
+            };
+            let tail_rest = if &inner.rest.len() > &1 {
+                inner.rest[2..inner.rest.len()].to_string()
+            } else {
+                "".into()
+            };
+            let head = inner.phrase.as_contiguous();
+            let mid = format!(
+                "{head}{tail}",
+                head = head.chars().last().unwrap_or(' '),
+                tail = mid_tail,
+            );
+            res.with_partial(
+                head[0..head.len().saturating_sub(1)].to_string(),
+                mid,
+                tail_rest,
+            );
+        }
+        res
     }
 
     pub fn with_full(&mut self, input: String) {
@@ -180,57 +189,5 @@ impl ParseResultOptions {
     #[wasm_bindgen(constructor)]
     pub fn new(separator: Option<String>) -> Self {
         Self { separator }
-    }
-}
-
-impl<'a> InnerParseResult<'a> {
-    pub fn render(&self, options: ParseResultOptions) -> ParseResults {
-        let mut res = ParseResults::new(options);
-        if self.full {
-            res.with_full(self.phrase.as_separated(&res.options.separator));
-        } else {
-            let mid_tail = if &self.rest.len() > &1 {
-                &self.rest[0..2]
-            } else {
-                self.rest.as_str()
-            };
-            let tail_rest = if &self.rest.len() > &1 {
-                self.rest[2..self.rest.len()].to_string()
-            } else {
-                "".into()
-            };
-            let head = self.phrase.as_contiguous();
-            let mid = format!(
-                "{head}{tail}",
-                head = head.chars().last().unwrap_or(' '),
-                tail = mid_tail,
-            );
-            res.with_partial(
-                head[0..head.len().saturating_sub(1)].to_string(),
-                mid,
-                tail_rest,
-            );
-        }
-        res
-    }
-}
-
-impl<'a> From<IResult<&'a str, Phrase<&'a str>>> for InnerParseResult<'a> {
-    fn from(value: IResult<&'a str, Phrase<&'a str>>) -> Self {
-        match value {
-            Ok((rest, phrase)) => Self {
-                full: rest.is_empty(),
-                rest: String::from(rest),
-                phrase: phrase,
-            },
-            Err(e) => {
-                alert(&format!("{}", e));
-                Self {
-                    full: false,
-                    rest: "".into(),
-                    phrase: Phrase { syllables: vec![] },
-                }
-            }
-        }
     }
 }
