@@ -6,9 +6,28 @@ use std::fmt::Display;
 
 use crate::phonotactics::tags::SyllableTags;
 
+#[cfg(feature = "faker")]
+use rand::{prelude::SliceRandom, SeedableRng};
+#[cfg(feature = "faker")]
+use rand_chacha::ChaCha8Rng;
+
 #[derive(Clone, Default)]
 pub struct PhonotacticRule {
     definition: SyllableTags<String>,
+}
+
+#[cfg(feature = "faker")]
+pub struct Faker {
+    pub rng: ChaCha8Rng,
+}
+
+#[cfg(feature = "faker")]
+impl Default for Faker {
+    fn default() -> Self {
+        Self {
+            rng: ChaCha8Rng::seed_from_u64(42),
+        }
+    }
 }
 
 impl PhonotacticRule {
@@ -20,6 +39,22 @@ impl PhonotacticRule {
             .as_str()
             .parse_tags(&input)
             .map(|(r, p)| (r, p.with_postprocessing(&self.definition)))
+    }
+
+    #[cfg(feature = "faker")]
+    pub fn generate_fake_word(&self, syllables: usize, rng: &mut ChaCha8Rng) -> String {
+        let mut fake = String::new();
+        let mut inner_definition = self.definition.clone();
+        // Possibly empty onset or coda
+        inner_definition.onset.items.push("".into());
+        inner_definition.coda.items.push("".into());
+        for _ in 0..syllables {
+            let onset = inner_definition.onset.items.choose(rng).unwrap();
+            let nucleus = inner_definition.nucleus.items.choose(rng).unwrap();
+            let coda = inner_definition.coda.items.choose(rng).unwrap();
+            fake = format!("{}{}{}{}", fake, onset, nucleus, coda);
+        }
+        fake
     }
 }
 

@@ -11,13 +11,13 @@ pub struct Phonotactic {
     name: String,
     definition: SyllableTags<String>,
 }
-
-#[wasm_bindgen]
 impl Phonotactic {
-    pub(crate) fn as_rule(&self) -> PhonotacticRule {
+    pub fn as_rule(&self) -> PhonotacticRule {
         PhonotacticRule::with_definitions(self.definition.clone())
     }
-
+}
+#[wasm_bindgen]
+impl Phonotactic {
     #[wasm_bindgen]
     pub fn parse_string(&mut self, input: String, options: ParseResultOptions) -> ParseResults {
         let text = input.to_lowercase();
