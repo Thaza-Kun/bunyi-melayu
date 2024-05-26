@@ -12,6 +12,7 @@ use rand::{prelude::SliceRandom, SeedableRng};
 use rand_chacha::ChaCha8Rng;
 
 #[derive(Clone, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct PhonotacticRule {
     definition: SyllableTags<String>,
 }

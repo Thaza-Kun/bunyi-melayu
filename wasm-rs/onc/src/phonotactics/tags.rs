@@ -2,18 +2,19 @@ use nom::{
     bytes::complete::tag_no_case, combinator::opt, error::ParseError, multi::many0,
     sequence::tuple, Compare, IResult, InputLength, InputTake, Parser,
 };
-use serde::Deserialize;
 
 use super::{Phrase, SyllableUnit};
 
-#[derive(Clone, Deserialize, Default)]
+#[derive(Clone, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct AltTagVec<T> {
     pub items: Vec<T>,
     #[serde(skip)]
     index: usize,
 }
 
-#[derive(Clone, Deserialize, Default)]
+#[derive(Clone, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct SyllableTags<T> {
     pub onset: AltTagVec<T>,
     pub nucleus: AltTagVec<T>,
