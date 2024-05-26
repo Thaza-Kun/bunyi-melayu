@@ -5,16 +5,16 @@ use nom::{
 
 use super::{Phrase, SyllableUnit};
 
-#[derive(Clone, Default)]
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+#[derive(Clone, Default, serde::Deserialize)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 pub struct AltTagVec<T> {
     pub items: Vec<T>,
     #[serde(skip)]
     index: usize,
 }
 
-#[derive(Clone, Default)]
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+#[derive(Clone, Default, serde::Deserialize)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 pub struct SyllableTags<T> {
     pub onset: AltTagVec<T>,
     pub nucleus: AltTagVec<T>,

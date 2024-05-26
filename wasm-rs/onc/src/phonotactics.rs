@@ -47,12 +47,21 @@ impl PhonotacticRule {
         let mut fake = String::new();
         let mut inner_definition = self.definition.clone();
         // Possibly empty onset or coda
+        // The onset/coda are inversely weighted by its length (short onset/coda are prioritized)
         inner_definition.onset.items.push("".into());
         inner_definition.coda.items.push("".into());
         for _ in 0..syllables {
-            let onset = inner_definition.onset.items.choose(rng).unwrap();
+            let onset = inner_definition
+                .onset
+                .items
+                .choose_weighted(rng, |i| 2 / (i.len() + 1))
+                .unwrap();
             let nucleus = inner_definition.nucleus.items.choose(rng).unwrap();
-            let coda = inner_definition.coda.items.choose(rng).unwrap();
+            let coda = inner_definition
+                .coda
+                .items
+                .choose_weighted(rng, |i| 2 / (i.len() + 1))
+                .unwrap();
             fake = format!("{}{}{}{}", fake, onset, nucleus, coda);
         }
         fake
