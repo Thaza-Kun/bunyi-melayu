@@ -54,7 +54,7 @@
 <h1>
 	<ruby class="flex flex-col">
 		<rt class="text-center font-mono text-2xl">&laquo; Tatabunyi &raquo;</rt>
-		<span>📝 <span class="font-mono text-6xl">تاتابوڽي</span> 📰</span>
+		<span>📝 <span class="text-6xl">تاتابوڽي</span> 📰</span>
 	</ruby>
 </h1>
 

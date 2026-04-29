@@ -5,7 +5,7 @@
 <h1>
 	<ruby class="flex flex-col">
 		<rt class="text-center font-mono text-2xl">&laquo; Bunyian Melayu &raquo;</rt>
-		<span>📝<span class="font-mono text-6xl">بوڽيان ملايو</span> 💬</span>
+		<span>📝<span class="text-6xl">بوڽيان ملايو</span> 💬</span>
 	</ruby>
 </h1>
 

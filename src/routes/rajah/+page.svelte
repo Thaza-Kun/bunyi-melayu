@@ -25,7 +25,7 @@
 <h1>
 	<ruby class="flex flex-col">
 		<rt class="text-center font-mono text-2xl">&laquo; Rajah Bunyi &raquo;</rt>
-		<span>🗨 <span class="font-mono text-6xl">راجه بوڽي</span> 💬</span>
+		<span>🗨 <span class="text-6xl">راجه بوڽي</span> 💬</span>
 	</ruby>
 </h1>
 <Tabs.Root class="mx-auto flex max-w-7xl flex-col">
